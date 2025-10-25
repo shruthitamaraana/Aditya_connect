@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placements - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background-color: #f37021;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: white;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .dropdown a:hover {
+            background: #f5f5f5;
+            color: #f37021;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: #0d2c54;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #f37021;
+        }
+
+        /* Card Layout */
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .card-title {
+            color: #0d2c54;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title i {
+            color: #f37021;
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Calendar Styles */
+        .calendar-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .calendar-nav button {
+            background: #f37021;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: #e55a0b;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-day {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: #e9ecef;
+        }
+
+        .calendar-day.has-event {
+            background: rgba(243, 112, 33, 0.1);
+            border: 2px solid #f37021;
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #f37021;
+            border-radius: 50%;
+        }
+
+        .upcoming-drives {
+            margin-top: 1.5rem;
+        }
+
+        .drive-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #f37021;
+            transition: all 0.3s ease;
+        }
+
+        .drive-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .drive-date {
+            color: #f37021;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .drive-company {
+            color: #0d2c54;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        /* Company Details */
+        .company-list {
+            max-height: 600px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .company-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #0d2c54;
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-name {
+            color: #0d2c54;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #333;
+            flex: 1;
+        }
+
+        .package-amount {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #f37021;
+            color: white;
+            box-shadow: 0 2px 10px rgba(243, 112, 33, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #e55a0b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        /* Statistics Section */
+        .statistics-card {
+            background: #f4f4f4;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f37021;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, #f37021, #0d2c54);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .success-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .success-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .student-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d2c54, #0078d7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .student-details h4 {
+            color: #0d2c54;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .student-company {
+            color: #f37021;
+            font-weight: 500;
+        }
+
+        .student-quote {
+            color: #666;
+            font-style: italic;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 1rem;
+            border-left: 3px solid #f37021;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0d2c54;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f37021;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #f37021;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 2px;
+            }
+
+            .calendar-day {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.875rem;
+            }
+
+            .company-details {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Registration Status */
+        .registration-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .status-open {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .status-closed {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .status-upcoming {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="aditya_about_page.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="announcements_page.html">Announcements</a></li>
+                <li><a href="events_page.html">Events</a></li>
+                <li><a href="placements_page.html" class="active">Placements</a></li>
+                <li><a href="research_blogs_page.html">Blogs/Research</a></li>
+                <li><a href="library.html">Library</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="user-avatar" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="dropdown" id="userDropdown">
+                    <a href="#account"><i class="fas fa-user-cog"></i> Account Details</a>
+                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#help"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header fade-in">
+            <h1 class="page-title" style="color: #f37021;">Placement Updates</h1>
+            <div class="breadcrumb">
+                <a href="#dashboard">Dashboard</a> / Placements
+            </div>
+        </div>
+
+        <!-- Upcoming Drives Calendar -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Upcoming Drives Calendar
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h3 style="color: #0d2c54;">January 2025</h3>
+                        <div class="calendar-nav">
+                            <button onclick="previousMonth()">
+                                <i class="fas fa-chevron-left"></i> Prev
+                            </button>
+                            <button onclick="nextMonth()">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Sun</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Mon</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Tue</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Wed</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Thu</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Fri</div>
+                        <div class="calendar-day" style="background: #e9ecef; font-weight: 600;">Sat</div>
+                        
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                        <div class="calendar-day has-event">15</div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day has-event">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day has-event">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day" style="background: #fff3cd;">28</div>
+                        <div class="calendar-day has-event">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                        <div class="calendar-day">1</div>
+                    </div>
+                </div>
+
+                <div class="upcoming-drives">
+                    <h3 style="color: #0d2c54; margin-bottom: 1rem;">Upcoming Placement Drives</h3>
+                    <div class="drive-item">
+                        <div class="drive-date">January 15, 2025</div>
+                        <div class="drive-company">Microsoft - Software Development Engineer</div>
+                    </div>
+                    <div class="drive-item">
+                        <div class="drive-date">January 20, 2025</div>
+                        <div class="drive-company">Google - Software Engineer</div>
+                    </div>
+                    <div class="drive-item">
+                        <div class="drive-date">January 22, 2025</div>
+                        <div class="drive-company">Amazon - SDE Intern</div>
+                    </div>
+                    <div class="drive-item">
+                        <div class="drive-date">January 29, 2025</div>
+                        <div class="drive-company">TCS - Associate Software Engineer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Details & Eligibility -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-building"></i>
+                    Company Details & Eligibility
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="company-list">
+                    <div class="company-card">
+                        <div class="company-name">
+                            <i class="fab fa-microsoft"></i>
+                            Microsoft Corporation
+                            <span class="registration-status status-open">Registration Open</span>
+                        </div>
+                        <div class="company-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Package Offered:</span>
+                                <span class="detail-value package-amount">₹18,00,000 - ₹25,00,000 LPA</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">Software Development Engineer</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Eligibility:</span>
+                                <span class="detail-value">B.Tech/M.Tech (CSE, IT, ECE) | CGPA ≥ 7.5 | No backlogs</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Drive Date:</span>
+                                <span class="detail-value">January 15, 2025</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="registerForDrive('Microsoft')">
+                            <i class="fas fa-user-plus"></i>
+                            Register Now
+                        </button>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-name">
+                            <i class="fab fa-google"></i>
+                            Google LLC
+                            <span class="registration-status status-upcoming">Opens Soon</span>
+                        </div>
+                        <div class="company-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Package Offered:</span>
+                                <span class="detail-value package-amount">₹22,00,000 - ₹30,00,000 LPA</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">Software Engineer</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Eligibility:</span>
+                                <span class="detail-value">B.Tech (CSE, IT) | CGPA ≥ 8.0 | Strong problem-solving skills</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Drive Date:</span>
+                                <span class="detail-value">January 20, 2025</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" disabled>
+                            <i class="fas fa-clock"></i>
+                            Registration Opens Jan 10
+                        </button>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-name">
+                            <i class="fab fa-amazon"></i>
+                            Amazon
+                            <span class="registration-status status-open">Registration Open</span>
+                        </div>
+                        <div class="company-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Package Offered:</span>
+                                <span class="detail-value package-amount">₹15,00,000 - ₹20,00,000 LPA</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">SDE Intern</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Eligibility:</span>
+                                <span class="detail-value">B.Tech (All branches) | CGPA ≥ 7.0 | Good coding skills</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Drive Date:</span>
+                                <span class="detail-value">January 22, 2025</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="registerForDrive('Amazon')">
+                            <i class="fas fa-user-plus"></i>
+                            Register Now
+                        </button>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-name">
+                            <i class="fas fa-building"></i>
+                            TCS (Tata Consultancy Services)
+                            <span class="registration-status status-closed">Registration Closed</span>
+                        </div>
+                        <div class="company-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Package Offered:</span>
+                                <span class="detail-value package-amount">₹3,50,000 - ₹7,00,000 LPA</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">Associate Software Engineer</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Eligibility:</span>
+                                <span class="detail-value">B.Tech/B.E (All branches) | CGPA ≥ 6.0 | No active backlogs</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Drive Date:</span>
+                                <span class="detail-value">January 29, 2025</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" disabled>
+                            <i class="fas fa-lock"></i>
+                            Registration Closed
+                        </button>
+                    </div>
+
+                    <div class="company-card">
+                        <div class="company-name">
+                            <i class="fab fa-apple"></i>
+                            Apple Inc.
+                            <span class="registration-status status-upcoming">Coming Soon</span>
+                        </div>
+                        <div class="company-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Package Offered:</span>
+                                <span class="detail-value package-amount">₹25,00,000 - ₹35,00,000 LPA</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">Software Engineer</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Eligibility:</span>
+                                <span class="detail-value">B.Tech/M.Tech (CSE, IT) | CGPA ≥ 8.5 | Strong technical skills</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Drive Date:</span>
+                                <span class="detail-value">February 5, 2025</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" disabled>
+                            <i class="fas fa-calendar-plus"></i>
+                            Coming Soon
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placement Statistics & Success Stories -->
+        <div class="card fade-in statistics-card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Placement Statistics & Success Stories
+                </h2>
+            </div>
+            <div class="card-body">
+                <!-- Statistics Section -->
+                <h3 style="color: #0d2c54; margin-bottom: 1.5rem;">Previous Year Statistics</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Placement Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">250+</div>
+                        <div class="stat-label">Companies Visited</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">₹12.5L</div>
+                        <div class="stat-label">Average Package</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">₹45L</div>
+                        <div class="stat-label">Highest Package</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h4 style="color: #0d2c54; margin-bottom: 1rem;">Top Recruiting Companies</h4>
+                    <div class="chart-placeholder">
+                        <div>
+                            <i class="fas fa-chart-pie" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <div>Interactive Placement Statistics Chart</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Microsoft (45), Google (32), Amazon (28), TCS (125), Infosys (89)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Stories Section -->
+                <h3 style="color: #0d2c54; margin-bottom: 1.5rem;">Success Stories</h3>
+                
+                <div class="success-stories">
+                    <div class="success-card">
+                        <div class="student-info">
+                            <div class="student-photo">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>Priya Sharma</h4>
+                                <div class="student-company">Microsoft - SDE II</div>
+                            </div>
+                        </div>
+                        <div class="student-quote">
+                            "Aditya University's placement cell provided excellent guidance throughout the process. The mock interviews and coding sessions were instrumental in my success at Microsoft. The faculty support was outstanding!"
+                        </div>
+                    </div>
+
+                    <div class="success-card">
+                        <div class="student-info">
+                            <div class="student-photo">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>Rajesh Kumar</h4>
+                                <div class="student-company">Google - Software Engineer</div>
+                            </div>
+                        </div>
+                        <div class="student-quote">
+                            "The technical training and soft skills development at Aditya University prepared me well for Google's rigorous interview process. I'm grateful for the comprehensive placement preparation program."
+                        </div>
+                    </div>
+
+                    <div class="success-card">
+                        <div class="student-info">
+                            <div class="student-photo">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>Ananya Reddy</h4>
+                                <div class="student-company">Amazon - SDE Intern</div>
+                            </div>
+                        </div>
+                        <div class="student-quote">
+                            "The placement team's personalized approach helped me identify the right opportunities. The resume building workshops and interview preparation were game-changers for my Amazon internship."
+                        </div>
+                    </div>
+
+                    <div class="success-card">
+                        <div class="student-info">
+                            <div class="student-photo">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="student-details">
+                                <h4>Vikram Singh</h4>
+                                <div class="student-company">Apple - iOS Developer</div>
+                            </div>
+                        </div>
+                        <div class="student-quote">
+                            "The industry connections and alumni network at Aditya University opened doors to opportunities I never imagined. The placement cell's support didn't end with getting the job - they continue to mentor us."
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-secondary" onclick="viewAllStories()">
+                        <i class="fas fa-eye"></i>
+                        View All Success Stories
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#contact">Contact</a>
+                <a href="help_support.html">Help</a>
+                <a href="terms.html">Terms and Conditions</a>
+                <a href="privacyPolicy.html">Privacy Policy</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Aditya University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // User dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Calendar navigation
+        function previousMonth() {
+            showNotification('Previous month functionality would be implemented here', 'info');
+        }
+
+        function nextMonth() {
+            showNotification('Next month functionality would be implemented here', 'info');
+        }
+
+        // Registration functionality
+        function registerForDrive(company) {
+            showNotification(`Registration for ${company} initiated! Redirecting to registration form...`, 'success');
+            // Simulate registration process
+            setTimeout(() => {
+                showNotification(`You have been successfully registered for ${company} placement drive`, 'success');
+            }, 2000);
+        }
+
+        // View all success stories
+        function viewAllStories() {
+            showNotification('Loading all success stories...', 'info');
+        }
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 350px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Calendar day click functionality
+        document.querySelectorAll('.calendar-day.has-event').forEach(day => {
+            day.addEventListener('click', () => {
+                const dayNumber = day.textContent;
+                showNotification(`Viewing events for January ${dayNumber}, 2025`, 'info');
+            });
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Auto-refresh upcoming drives every 5 minutes
+            setInterval(() => {
+                console.log('Refreshing placement data...');
+                // In a real application, this would fetch new data
+            }, 300000);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('userDropdown');
+                const navLinks = document.getElementById('navLinks');
+                dropdown.classList.remove('show');
+                navLinks.classList.remove('show');
+            }
+        });
+
+        // Search functionality for companies
+        function searchCompanies() {
+            const searchTerm = prompt('Enter company name to search:');
+            if (searchTerm) {
+                const companies = document.querySelectorAll('.company-card');
+                companies.forEach(card => {
+                    const companyName = card.querySelector('.company-name').textContent.toLowerCase();
+                    if (companyName.includes(searchTerm.toLowerCase())) {
+                        card.style.display = 'block';
+                        card.style.background = '#fff3cd';
+                        setTimeout(() => {
+                            card.style.background = '#f8f9fa';
+                        }, 2000);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                setTimeout(() => {
+                    companies.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                }, 10000);
+            }
+        }
+
+        // Filter companies by status
+        function filterByStatus(status) {
+            const companies = document.querySelectorAll('.company-card');
+            companies.forEach(card => {
+                const statusElement = card.querySelector('.registration-status');
+                if (status === 'all' || statusElement.textContent.toLowerCase().includes(status.toLowerCase())) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Export placement data (for admin users)
+        function exportPlacementData() {
+            showNotification('Exporting placement data to CSV...', 'info');
+            // In a real application, this would generate and download a CSV file
+            setTimeout(() => {
+                showNotification('Placement data exported successfully!', 'success');
+            }, 2000);
+        }
+
+        // Progressive loading for large datasets
+        function loadMoreCompanies() {
+            const companyList = document.querySelector('.company-list');
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading more companies...';
+            loadingIndicator.style.textAlign = 'center';
+            loadingIndicator.style.padding = '2rem';
+            companyList.appendChild(loadingIndicator);
+            
+            setTimeout(() => {
+                companyList.removeChild(loadingIndicator);
+                showNotification('All companies loaded', 'info');
+            }, 1500);
+        }
+
+        // Touch gestures for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            
+            // Swipe left to go to next month
+            if (Math.abs(diffX) > Math.abs(diffY) && diffX > 100) {
+                nextMonth();
+            }
+            // Swipe right to go to previous month
+            else if (Math.abs(diffX) > Math.abs(diffY) && diffX < -100) {
+                previousMonth();
+            }
+        });
+
+        // Accessibility improvements
+        function addAccessibilityFeatures() {
+            // Add ARIA labels
+            document.querySelectorAll('.btn').forEach(btn => {
+                if (!btn.getAttribute('aria-label')) {
+                    btn.setAttribute('aria-label', btn.textContent.trim());
+                }
+            });
+            
+            // Add keyboard navigation for calendar
+            document.querySelectorAll('.calendar-day').forEach((day, index) => {
+                day.setAttribute('tabindex', '0');
+                day.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        day.click();
+                    }
+                });
+            });
+            
+            // Add live region for dynamic content
+            const liveRegion = document.createElement('div');
+            liveRegion.setAttribute('aria-live', 'polite');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.style.position = 'absolute';
+            liveRegion.style.left = '-10000px';
+            liveRegion.style.width = '1px';
+            liveRegion.style.height = '1px';
+            liveRegion.style.overflow = 'hidden';
+            document.body.appendChild(liveRegion);
+            
+            window.announceToScreenReader = (message) => {
+                liveRegion.textContent = message;
+            };
+        }
+
+        // Call accessibility setup
+        addAccessibilityFeatures();
+
+        // Performance optimization
+        function optimizeImages() {
+            // Lazy loading for images (if any are added later)
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Call optimization functions
+        optimizeImages();
+
+        // Service Worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Print functionality
+        function printPlacementInfo() {
+            window.print();
+        }
+
+        // Share functionality
+        async function sharePlacementInfo() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Aditya University - Placement Updates',
+                        text: 'Check out the latest placement opportunities at Aditya University',
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log('Error sharing:', err);
+                }
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('Link copied to clipboard!', 'success');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

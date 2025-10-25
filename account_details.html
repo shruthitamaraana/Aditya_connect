@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background-color: #f37021;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: #f37021;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(243, 112, 33, 0.2);
+            color: #f37021;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f37021;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: #e55a0b;
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .dropdown a:hover {
+            background: #f5f5f5;
+            color: #f37021;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: #0d2c54;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #f37021;
+        }
+
+        /* Card Layout */
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .card-title {
+            color: #0d2c54;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title i {
+            color: #f37021;
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d2c54, #0078d7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            border: 4px solid #f37021;
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.02);
+        }
+
+        .upload-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #f37021;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-overlay:hover {
+            background: #e55a0b;
+            transform: scale(1.1);
+        }
+
+        /* Form Elements */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0d2c54;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f37021;
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+        }
+
+        .form-input:read-only {
+            background: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #f37021;
+            color: white;
+            box-shadow: 0 2px 10px rgba(13, 44, 84, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0a1f3a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(13, 44, 84, 0.4);
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        .btn-accent {
+            background: #f37021;
+            color: white;
+            box-shadow: 0 2px 10px rgba(243, 112, 33, 0.3);
+        }
+
+        .btn-accent:hover {
+            background: #e55a0b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
+        }
+
+        .btn-neutral {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-neutral:hover {
+            background: #545b62;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Activity History */
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f8f9fa;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.comment {
+            background: rgba(0, 120, 215, 0.1);
+            color: #0078d7;
+        }
+
+        .activity-icon.like {
+            background: rgba(243, 112, 33, 0.1);
+            color: #f37021;
+        }
+
+        .activity-icon.share {
+            background: rgba(13, 44, 84, 0.1);
+            color: #0d2c54;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: #333;
+            margin-bottom: 0.25rem;
+            line-height: 1.5;
+        }
+
+        .activity-time {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        /* Notification Preferences */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: background 0.3s ease;
+        }
+
+        .checkbox-group:hover {
+            background: #f0f2f5;
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            accent-color: #f37021;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checkbox-description {
+            color: #666;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f37021;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f37021;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #f37021;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .profile-image {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .upload-overlay {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Edit mode styles */
+        .edit-mode .form-input:not([readonly]) {
+            border-color: #f37021;
+            background: #fff8f2;
+        }
+
+        .edit-actions {
+            display: none;
+        }
+
+        .edit-mode .edit-actions {
+            display: flex;
+        }
+
+        .edit-mode .view-actions {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header" style="color: #ffffff;">
+        <nav class="nav-container">
+            <a href="aditya_about_page.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="announcements_page.html">Announcements</a></li>
+                <li><a href="events_page.html">Events</a></li>
+                <li><a href="placements_page.html">Placements</a></li>
+                <li><a href="research_blogs_page.html">Blogs/Research</a></li>
+                <li><a href="library.html">Library</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="user-avatar" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="dropdown" id="userDropdown">
+                    <a href="account_details.html" class="active"><i class="fas fa-user-cog"></i> Account Details</a>
+                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="help_support.html"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header fade-in">
+            <h1 class="page-title" style="color: #f37021;">Account Details</h1>
+            <div class="breadcrumb">
+                <a href="#dashboard">Dashboard</a> / Account Details
+            </div>
+        </div>
+
+        <!-- Profile Information Card -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title" style="color: #f37021;">
+                    <i class="fas fa-user-circle"></i>
+                    Profile Information
+                </h2>
+            </div>
+            <div class="card-body" id="profileCard">
+                <div class="profile-section">
+                    <div class="profile-image-container">
+                        <div class="profile-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="upload-overlay" onclick="uploadPhoto()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="btn-group view-actions">
+                        <button class="btn btn-secondary" onclick="uploadPhoto()">
+                            <i class="fas fa-upload"></i>
+                            Upload New Photo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="fullName" value="Dr. Sarah Chen" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" value="sarah.chen@adityauniversity.edu" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" id="role" value="Faculty - Professor" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <input type="text" class="form-input" id="department" value="Computer Science & Engineering" readonly>
+                    </div>
+                </div>
+
+                <div class="btn-group view-actions">
+                    <button class="btn btn-accent" onclick="enableEdit()">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="btn-group edit-actions">
+                    <button class="btn btn-primary" onclick="saveChanges()">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                    <button class="btn btn-neutral" onclick="cancelEdit()">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity History Card -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title" style="color: #f37021;">
+                    <i class="fas fa-history"></i>
+                    Recent Activity
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon comment">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text">Commented on "Machine Learning Research Paper: Neural Networks in Healthcare"</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon like">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text">Liked "Annual Tech Fest 2025 - Registration Now Open" post</div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon share">
+                            <i class="fas fa-share"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text">Shared "Placement Update: Microsoft Campus Drive Results"</div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon comment">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text">Commented on "AI Workshop Series - Week 3 Materials"</div>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon like">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-text">Liked "Student Project Showcase - Innovative Solutions"</div>
+                            <div class="activity-time">3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Preferences Card -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title" style="color: #f37021;">
+                    <i class="fas fa-bell"></i>
+                    Notification Preferences
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="emailAnnouncements" checked>
+                    <label for="emailAnnouncements" class="checkbox-label">
+                        Email Notifications for Announcements
+                        <div class="checkbox-description">Receive important university announcements via email</div>
+                    </label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="pushEvents" checked>
+                    <label for="pushEvents" class="checkbox-label">
+                        Push Notifications for Events
+                        <div class="checkbox-description">Get notified about upcoming events and deadlines</div>
+                    </label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" class="checkbox-input" id="dailyDigest">
+                    <label for="dailyDigest" class="checkbox-label">
+                        Daily Digest Email
+                        <div class="checkbox-description">Receive a summary of daily activities and updates</div>
+                    </label>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="savePreferences()">
+                        <i class="fas fa-save"></i>
+                        Save Preferences
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#contact">Contact</a>
+                <a href="#help">Help</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Aditya University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // User dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Profile editing functionality
+        function enableEdit() {
+            const profileCard = document.getElementById('profileCard');
+            const nameInput = document.getElementById('fullName');
+            const deptInput = document.getElementById('department');
+            
+            profileCard.classList.add('edit-mode');
+            nameInput.removeAttribute('readonly');
+            deptInput.removeAttribute('readonly');
+            nameInput.focus();
+        }
+
+        function cancelEdit() {
+            const profileCard = document.getElementById('profileCard');
+            const nameInput = document.getElementById('fullName');
+            const deptInput = document.getElementById('department');
+            
+            profileCard.classList.remove('edit-mode');
+            nameInput.setAttribute('readonly', true);
+            deptInput.setAttribute('readonly', true);
+            
+            // Reset values
+            nameInput.value = "Dr. Sarah Chen";
+            deptInput.value = "Computer Science & Engineering";
+        }
+
+        function saveChanges() {
+            const profileCard = document.getElementById('profileCard');
+            const nameInput = document.getElementById('fullName');
+            const deptInput = document.getElementById('department');
+            
+            // Simulate saving
+            profileCard.classList.remove('edit-mode');
+            nameInput.setAttribute('readonly', true);
+            deptInput.setAttribute('readonly', true);
+            
+            // Show success message
+            showNotification('Profile updated successfully!', 'success');
+        }
+
+        function uploadPhoto() {
+            // Simulate photo upload
+            showNotification('Photo upload functionality would open here', 'info');
+        }
+
+        function savePreferences() {
+            const emailAnnouncements = document.getElementById('emailAnnouncements').checked;
+            const pushEvents = document.getElementById('pushEvents').checked;
+            const dailyDigest = document.getElementById('dailyDigest').checked;
+            
+            // Simulate saving preferences
+            console.log('Saving preferences:', { emailAnnouncements, pushEvents, dailyDigest });
+            showNotification('Notification preferences saved successfully!', 'success');
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add active class to current page in navigation
+            const currentPage = 'account';
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href').includes(currentPage)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Add smooth scrolling animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('userDropdown');
+                const navLinks = document.getElementById('navLinks');
+                dropdown.classList.remove('show');
+                navLinks.classList.remove('show');
+                
+                // Exit edit mode if active
+                const profileCard = document.getElementById('profileCard');
+                if (profileCard.classList.contains('edit-mode')) {
+                    cancelEdit();
+                }
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            const nameInput = document.getElementById('fullName');
+            const deptInput = document.getElementById('department');
+            
+            if (nameInput.value.trim().length < 2) {
+                showNotification('Name must be at least 2 characters long', 'error');
+                return false;
+            }
+            
+            if (deptInput.value.trim().length < 2) {
+                showNotification('Department must be specified', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Enhanced save function with validation
+        function saveChanges() {
+            if (!validateForm()) {
+                return;
+            }
+            
+            const profileCard = document.getElementById('profileCard');
+            const nameInput = document.getElementById('fullName');
+            const deptInput = document.getElementById('department');
+            
+            // Simulate API call
+            const loadingBtn = event.target;
+            const originalText = loadingBtn.innerHTML;
+            loadingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            loadingBtn.disabled = true;
+            
+            setTimeout(() => {
+                profileCard.classList.remove('edit-mode');
+                nameInput.setAttribute('readonly', true);
+                deptInput.setAttribute('readonly', true);
+                
+                loadingBtn.innerHTML = originalText;
+                loadingBtn.disabled = false;
+                
+                showNotification('Profile updated successfully!', 'success');
+            }, 1500);
+        }
+
+        // Activity refresh functionality
+        function refreshActivity() {
+            const activityList = document.querySelector('.activity-list');
+            activityList.style.opacity = '0.5';
+            
+            // Simulate loading new activities
+            setTimeout(() => {
+                activityList.style.opacity = '1';
+                showNotification('Activity refreshed', 'info');
+            }, 1000);
+        }
+
+        // Auto-save preferences
+        document.querySelectorAll('.checkbox-input').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Auto-save after a delay
+                clearTimeout(window.autoSaveTimeout);
+                window.autoSaveTimeout = setTimeout(() => {
+                    savePreferences();
+                }, 2000);
+            });
+        });
+
+        // Touch support for mobile
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            // Pull to refresh activity (swipe down on activity list)
+            if (diff < -100 && e.target.closest('.activity-list')) {
+                refreshActivity();
+            }
+        });
+
+        // Accessibility improvements
+        function addAccessibilityAttributes() {
+            // Add ARIA labels
+            document.querySelector('.user-avatar').setAttribute('aria-label', 'User menu');
+            document.querySelector('.mobile-menu-toggle').setAttribute('aria-label', 'Toggle mobile menu');
+            
+            // Add role attributes
+            document.querySelector('.dropdown').setAttribute('role', 'menu');
+            document.querySelectorAll('.dropdown a').forEach(link => {
+                link.setAttribute('role', 'menuitem');
+            });
+            
+            // Add live region for notifications
+            const liveRegion = document.createElement('div');
+            liveRegion.setAttribute('aria-live', 'polite');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.style.position = 'absolute';
+            liveRegion.style.left = '-10000px';
+            liveRegion.style.width = '1px';
+            liveRegion.style.height = '1px';
+            liveRegion.style.overflow = 'hidden';
+            document.body.appendChild(liveRegion);
+            
+            window.announceToScreenReader = (message) => {
+                liveRegion.textContent = message;
+            };
+        }
+
+        // Call accessibility setup
+        addAccessibilityAttributes();
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Dark mode toggle (bonus feature)
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Load dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>

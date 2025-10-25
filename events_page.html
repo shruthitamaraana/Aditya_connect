@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background-color: #f37021;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: white;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .role-selector select option {
+            background: #f37021;
+            color: white;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: #f37021;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #f37021;
+        }
+
+        /* Filter Card */
+        .filter-card {
+            background: #f4f4f4;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .filter-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .filter-tab.active {
+            background: #0078d7;
+            color: white;
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: rgba(0, 120, 215, 0.1);
+            color: #0078d7;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            color: #0d2c54;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: white;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #f37021;
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #0d2c54;
+            color: white;
+            box-shadow: 0 2px 10px rgba(13, 44, 84, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0a1f3a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(13, 44, 84, 0.4);
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        .btn-accent {
+            background: #f37021;
+            color: white;
+            box-shadow: 0 2px 10px rgba(243, 112, 33, 0.3);
+        }
+
+        .btn-accent:hover {
+            background: #e55a0b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
+        }
+
+        /* Event Cards */
+        .events-container {
+            margin-bottom: 3rem;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .event-banner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #0d2c54, #0078d7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-banner.tech {
+            background: linear-gradient(135deg, #f37021, #e55a0b);
+        }
+
+        .event-banner.workshop {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .event-banner.club {
+            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+        }
+
+        .event-banner.placement {
+            background: linear-gradient(135deg, #fd7e14, #ffc107);
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-title {
+            color: #0d2c54;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item i {
+            color: #f37021;
+            width: 16px;
+        }
+
+        .event-description {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .event-type-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Media Gallery */
+        .media-gallery {
+            background: #f4f4f4;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .gallery-title {
+            color: #0078d7;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 16/9;
+        }
+
+        .media-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .media-thumbnail {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0d2c54, #0078d7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .media-thumbnail.photo {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .media-thumbnail.video {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+        }
+
+        .media-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .media-item:hover .media-overlay {
+            transform: translateY(0);
+        }
+
+        .media-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .media-date {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .gallery-actions {
+            text-align: center;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f37021;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #f37021;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+                gap: 0;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .user-profile {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .filter-card {
+                padding: 1rem;
+            }
+
+            .filter-tabs {
+                flex-wrap: wrap;
+            }
+
+            .filter-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-actions {
+                flex-direction: column;
+            }
+
+            .media-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .filter-card {
+                padding: 1rem;
+            }
+
+            .media-gallery {
+                padding: 1rem;
+            }
+
+            .event-content {
+                padding: 1rem;
+            }
+
+            .event-banner {
+                height: 150px;
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal for media viewing */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1rem 2rem;
+            background: #f37021;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </div>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="announcements_page.html">Announcements</a>
+                <a href="events_page.html" class="active">Events</a>
+                <a href="placements_page.html">Placements</a>
+                <a href="research_blogs_page.html">Research</a>
+                <a href="library.html">Library</a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="role-selector">
+                    <select id="roleSelector" onchange="switchRole()">
+                        <option value="guest">Guest</option>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                        <option value="club-head">Club Head</option>
+                        <option value="library-head">Library Head</option>
+                        <option value="operator">Operator</option>
+                    </select>
+                </div>
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header fade-in">
+            <h1 class="page-title">Events</h1>
+            <div class="breadcrumb">
+                <a href="#dashboard">Dashboard</a> / Events
+            </div>
+        </div>
+
+        <!-- Filter Options -->
+        <div class="filter-card fade-in">
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="switchTab('upcoming')">
+                    <i class="fas fa-calendar-plus"></i> Upcoming Events
+                </button>
+                <button class="filter-tab" onclick="switchTab('past')">
+                    <i class="fas fa-history"></i> Past Events
+                </button>
+                <button class="filter-tab" onclick="switchTab('club')">
+                    <i class="fas fa-users"></i> Club Events
+                </button>
+            </div>
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label class="filter-label">Event Type:</label>
+                    <select class="filter-select" id="eventTypeFilter" onchange="applyFilters()">
+                        <option value="all">All Types</option>
+                        <option value="tech">Tech Fest</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="club">Club Meet</option>
+                        <option value="placement">Placement Drive</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="sports">Sports</option>
+                        <option value="cultural">Cultural</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i>
+                    Apply Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Events Container -->
+        <div class="events-container fade-in">
+            <div class="events-grid" id="eventsGrid">
+                <!-- Upcoming Events -->
+                <div class="event-card" data-tab="upcoming" data-type="tech">
+                    <div class="event-banner tech">
+                        <i class="fas fa-rocket"></i>
+                        <div class="event-type-badge">Tech Fest</div>
+                        <div class="event-date-badge">
+                            <div>Feb</div>
+                            <div>15</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Annual Tech Fest 2025</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>February 15-17, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>9:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Main Auditorium & Tech Labs</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Join us for the biggest technology festival of the year! Featuring coding competitions, hackathons, tech talks by industry experts, project exhibitions, and networking opportunities with leading tech companies.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-accent">
+                                <i class="fas fa-user-plus"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" data-tab="upcoming" data-type="workshop">
+                    <div class="event-banner workshop">
+                        <i class="fas fa-brain"></i>
+                        <div class="event-type-badge">Workshop</div>
+                        <div class="event-date-badge">
+                            <div>Feb</div>
+                            <div>8</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">AI & Machine Learning Workshop</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>February 8, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>10:00 AM - 4:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Computer Lab - Block A</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Hands-on workshop on Artificial Intelligence and Machine Learning. Learn the fundamentals, work with real datasets, and build your first ML model. Suitable for beginners and intermediate learners.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-accent">
+                                <i class="fas fa-user-plus"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" data-tab="upcoming" data-type="placement">
+                    <div class="event-banner placement">
+                        <i class="fas fa-briefcase"></i>
+                        <div class="event-type-badge">Placement</div>
+                        <div class="event-date-badge">
+                            <div>Feb</div>
+                            <div>12</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Microsoft Campus Drive</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>February 12, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>9:00 AM - 5:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Placement Cell</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Microsoft is conducting an on-campus placement drive for Software Engineer positions. Open to final year students from CSE, ECE, and IT departments. Includes technical rounds and HR interviews.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-accent">
+                                <i class="fas fa-user-plus"></i>
+                                Register Now
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" data-tab="club" data-type="club">
+                    <div class="event-banner club">
+                        <i class="fas fa-users"></i>
+                        <div class="event-type-badge">Club Event</div>
+                        <div class="event-date-badge">
+                            <div>Feb</div>
+                            <div>5</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Coding Club Monthly Meetup</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>February 5, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>6:00 PM - 8:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Student Activity Center</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Monthly meetup of the Coding Club featuring algorithmic problem solving sessions, coding challenges, and peer learning. Great opportunity to network with fellow programmers and improve your coding skills.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-accent">
+                                <i class="fas fa-user-plus"></i>
+                                Join Meetup
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Past Events -->
+                <div class="event-card" data-tab="past" data-type="seminar" style="display: none;">
+                    <div class="event-banner">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div class="event-type-badge">Seminar</div>
+                        <div class="event-date-badge">
+                            <div>Jan</div>
+                            <div>20</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Industry Expert Seminar Series</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>January 20, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>2:00 PM - 5:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Main Auditorium</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Successful seminar featuring industry experts sharing insights on emerging technologies, career guidance, and industry trends. Over 500 students attended this enlightening session.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-eye"></i>
+                                View Highlights
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-download"></i>
+                                Download Materials
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" data-tab="past" data-type="cultural" style="display: none;">
+                    <div class="event-banner tech">
+                        <i class="fas fa-music"></i>
+                        <div class="event-type-badge">Cultural</div>
+                        <div class="event-date-badge">
+                            <div>Jan</div>
+                            <div>15</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Annual Cultural Fest 2025</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>January 15-17, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>All Day Event</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Campus Wide</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Amazing three-day cultural extravaganza featuring music, dance, drama, art exhibitions, and food festivals. Students showcased their talents in various cultural competitions and performances.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-eye"></i>
+                                View Highlights
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-images"></i>
+                                Photo Gallery
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" data-tab="past" data-type="sports" style="display: none;">
+                    <div class="event-banner workshop">
+                        <i class="fas fa-trophy"></i>
+                        <div class="event-type-badge">Sports</div>
+                        <div class="event-date-badge">
+                            <div>Jan</div>
+                            <div>10</div>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">Inter-College Sports Championship</h3>
+                        <div class="event-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>January 10-12, 2025</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>8:00 AM - 6:00 PM</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Sports Complex</span>
+                            </div>
+                        </div>
+                        <p class="event-description">
+                            Annual inter-college sports championship featuring cricket, football, basketball, volleyball, badminton, and athletics. Our college teams won multiple championships and individual medals.
+                        </p>
+                        <div class="event-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-eye"></i>
+                                View Results
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-medal"></i>
+                                Winners List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-calendar-times"></i>
+                <h3>No events found</h3>
+                <p>Try changing your filters to see more events</p>
+            </div>
+        </div>
+
+        <!-- Media Gallery -->
+        <div class="media-gallery fade-in">
+            <h2 class="gallery-title">Past Event Highlights</h2>
+            <div class="media-grid">
+                <div class="media-item" onclick="openMediaModal('photo', 'Tech Fest 2024 Opening Ceremony', 'January 2024')">
+                    <div class="media-thumbnail photo">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Tech Fest 2024 Opening Ceremony</div>
+                        <div class="media-date">January 2024</div>
+                    </div>
+                </div>
+                
+                <div class="media-item" onclick="openMediaModal('video', 'Workshop Highlights', 'December 2024')">
+                    <div class="media-thumbnail video">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Workshop Highlights</div>
+                        <div class="media-date">December 2024</div>
+                    </div>
+                </div>
+                
+                <div class="media-item" onclick="openMediaModal('photo', 'Cultural Fest Performances', 'November 2024')">
+                    <div class="media-thumbnail photo">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Cultural Fest Performances</div>
+                        <div class="media-date">November 2024</div>
+                    </div>
+                </div>
+                
+                <div class="media-item" onclick="openMediaModal('video', 'Sports Championship Finals', 'October 2024')">
+                    <div class="media-thumbnail video">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Sports Championship Finals</div>
+                        <div class="media-date">October 2024</div>
+                    </div>
+                </div>
+                
+                <div class="media-item" onclick="openMediaModal('photo', 'Graduation Ceremony 2024', 'September 2024')">
+                    <div class="media-thumbnail">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Graduation Ceremony 2024</div>
+                        <div class="media-date">September 2024</div>
+                    </div>
+                </div>
+                
+                <div class="media-item" onclick="openMediaModal('video', 'Alumni Meet Highlights', 'August 2024')">
+                    <div class="media-thumbnail video">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="media-overlay">
+                        <div class="media-title">Alumni Meet Highlights</div>
+                        <div class="media-date">August 2024</div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-actions">
+                <button class="btn btn-secondary" onclick="viewAllMedia()">
+                    <i class="fas fa-images"></i>
+                    View All Media
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#contact">Contact</a>
+                <a href="help_support.html">Help</a>
+                <a href="privacyPolicy.html">Privacy Policy</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Aditya University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Media Modal -->
+    <div id="mediaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Media Title</h3>
+                <button class="modal-close" onclick="closeMediaModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Media content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTab = 'upcoming';
+        let currentEventType = 'all';
+
+        // Header functionality
+        function switchRole() {
+            const roleSelector = document.getElementById('roleSelector');
+            const selectedRole = roleSelector.value;
+            console.log('Switched to role:', selectedRole);
+            showNotification(`Switched to ${selectedRole} role`, 'info');
+        }
+
+        // Mobile menu functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        });
+
+        // Tab switching functionality
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide events based on tab
+            showEventsForTab(tabName);
+        }
+
+        // Show events for specific tab
+        function showEventsForTab(tabName) {
+            const allEvents = document.querySelectorAll('.event-card');
+            let visibleCount = 0;
+            
+            allEvents.forEach(event => {
+                const eventTab = event.dataset.tab;
+                const eventType = event.dataset.type;
+                
+                let shouldShow = eventTab === tabName;
+                
+                // Apply event type filter
+                if (currentEventType !== 'all' && eventType !== currentEventType) {
+                    shouldShow = false;
+                }
+                
+                if (shouldShow) {
+                    event.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    event.style.display = 'none';
+                }
+            });
+            
+            // Show empty state if no events
+            showEmptyState(visibleCount === 0);
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const eventTypeFilter = document.getElementById('eventTypeFilter');
+            currentEventType = eventTypeFilter.value;
+            
+            showEventsForTab(currentTab);
+            showNotification('Filters applied successfully', 'info');
+        }
+
+        // Show empty state
+        function showEmptyState(show) {
+            const emptyState = document.getElementById('emptyState');
+            if (show) {
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
+        }
+
+        // Media modal functionality
+        function openMediaModal(type, title, date) {
+            const modal = document.getElementById('mediaModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = title;
+            
+            let content = '';
+            if (type === 'photo') {
+                content = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-image" style="font-size: 4rem; color: #ddd; margin-bottom: 1rem;"></i>
+                        <h3>${title}</h3>
+                        <p style="color: #666; margin: 1rem 0;">${date}</p>
+                        <p>Photo gallery would be displayed here with actual images from the event.</p>
+                        <div style="margin-top: 2rem;">
+                            <button class="btn btn-secondary" onclick="downloadMedia()">
+                                <i class="fas fa-download"></i> Download Photos
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'video') {
+                content = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-video" style="font-size: 4rem; color: #ddd; margin-bottom: 1rem;"></i>
+                        <h3>${title}</h3>
+                        <p style="color: #666; margin: 1rem 0;">${date}</p>
+                        <p>Video player would be embedded here with actual event footage.</p>
+                        <div style="margin-top: 2rem;">
+                            <button class="btn btn-accent" onclick="playVideo()">
+                                <i class="fas fa-play"></i> Play Video
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            modalBody.innerHTML = content;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close media modal
+        function closeMediaModal() {
+            const modal = document.getElementById('mediaModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('mediaModal');
+            if (event.target === modal) {
+                closeMediaModal();
+            }
+        }
+
+        // Media functions
+        function downloadMedia() {
+            showNotification('Media download started', 'success');
+            closeMediaModal();
+        }
+
+        function playVideo() {
+            showNotification('Video playback started', 'info');
+        }
+
+        function viewAllMedia() {
+            showNotification('Redirecting to media gallery', 'info');
+        }
+
+        // Event registration functionality
+        function registerForEvent(eventTitle) {
+            showNotification(`Registration successful for ${eventTitle}`, 'success');
+        }
+
+        // Add click handlers to registration buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.event-card').forEach(card => {
+                const registerBtn = card.querySelector('.btn-accent');
+                const eventTitle = card.querySelector('.event-title').textContent;
+                
+                if (registerBtn) {
+                    registerBtn.addEventListener('click', () => {
+                        registerForEvent(eventTitle);
+                    });
+                }
+            });
+        });
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Initialize with upcoming events
+            showEventsForTab('upcoming');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close modal
+            if (e.key === 'Escape') {
+                closeMediaModal();
+            }
+            
+            // Tab navigation
+            if (e.key >= '1' && e.key <= '3') {
+                const tabs = ['upcoming', 'past', 'club'];
+                const tabIndex = parseInt(e.key) - 1;
+                if (tabs[tabIndex]) {
+                    const tabButtons = document.querySelectorAll('.filter-tab');
+                    if (tabButtons[tabIndex]) {
+                        tabButtons[tabIndex].click();
+                    }
+                }
+            }
+        });
+
+        // Export events functionality
+        function exportEvents() {
+            const visibleEvents = Array.from(document.querySelectorAll('.event-card:not([style*="display: none"])'));
+            const data = visibleEvents.map(event => ({
+                title: event.querySelector('.event-title').textContent,
+                type: event.dataset.type,
+                date: event.querySelector('.meta-item:first-child span').textContent,
+                time: event.querySelector('.meta-item:nth-child(2) span').textContent,
+                location: event.querySelector('.meta-item:nth-child(3) span').textContent,
+                description: event.querySelector('.event-description').textContent.trim()
+            }));
+            
+            const csv = 'Title,Type,Date,Time,Location,Description\n' + 
+                       data.map(row => Object.values(row).map(val => `"${val}"`).join(',')).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `events_${currentTab}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('Events exported successfully', 'success');
+        }
+
+        // Search functionality
+        function searchEvents(query) {
+            const events = document.querySelectorAll('.event-card');
+            let visibleCount = 0;
+            
+            events.forEach(event => {
+                const title = event.querySelector('.event-title').textContent.toLowerCase();
+                const description = event.querySelector('.event-description').textContent.toLowerCase();
+                const searchQuery = query.toLowerCase();
+                
+                if (title.includes(searchQuery) || description.includes(searchQuery) || searchQuery === '') {
+                    // Still respect tab and filter settings
+                    const eventTab = event.dataset.tab;
+                    const eventType = event.dataset.type;
+                    
+                    let shouldShow = eventTab === currentTab;
+                    if (currentEventType !== 'all' && eventType !== currentEventType) {
+                        shouldShow = false;
+                    }
+                    
+                    if (shouldShow) {
+                        event.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        event.style.display = 'none';
+                    }
+                } else {
+                    event.style.display = 'none';
+                }
+            });
+            
+            showEmptyState(visibleCount === 0);
+        }
+
+        // Calendar integration
+        function addToCalendar(eventTitle, eventDate, eventTime, eventLocation) {
+            const startDate = new Date(eventDate + ' ' + eventTime.split(' - ')[0]);
+            const endDate = new Date(eventDate + ' ' + eventTime.split(' - ')[1]);
+            
+            const event = {
+                title: eventTitle,
+                start: startDate.toISOString(),
+                end: endDate.toISOString(),
+                location: eventLocation
+            };
+            
+            // Generate Google Calendar URL
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start.replace(/[-:]/g, '').split('.')[0]}Z/${event.end.replace(/[-:]/g, '').split('.')[0]}Z&location=${encodeURIComponent(event.location)}`;
+            
+            window.open(googleCalendarUrl, '_blank');
+            showNotification('Opening calendar to add event', 'info');
+        }
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

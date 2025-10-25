@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Resources - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+
+         /* Header Styles */
+        .header {
+            background: #f37021;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: white;
+            margin-right: 0.5rem;
+            font-size: 1.75rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-icon:hover {
+            transform: scale(1.1);
+            background: #ffed4e;
+        }
+
+        .role-selector select {
+            padding: 0.5rem;
+            border: 2px solid white;
+            border-radius: 8px;
+            color: #f37021;
+            font-weight: 500;
+            background: white;
+            cursor: pointer;
+        }
+
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #0d2c54, #0078d7);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-controls {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-input {
+            position: relative;
+        }
+
+        .search-input input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input input:focus {
+            outline: none;
+            border-color: #f37021;
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+        }
+
+        .search-input i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .filter-select {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #f37021;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: #f37021;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #e55a0b;
+            transform: translateY(-2px);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0 1.5rem;
+        }
+
+        .section-header h2 {
+            color: #0d2c54;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #f37021;
+            border-radius: 2px;
+        }
+
+        .view-all-btn {
+            color: #0078d7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            color: #f37021;
+        }
+
+        /* Resource Cards */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f37021, #e55a0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
+                        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%), 
+                        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0d2c54;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .card-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-category {
+            color: #f37021;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #f37021;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e55a0b;
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #0d2c54;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-outline:hover {
+            background: #f5f5f5;
+        }
+
+        /* Announcements Section */
+        .announcements-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .announcement-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-item:hover {
+            background: #f9f9f9;
+            margin: 0 -1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .announcement-title {
+            color: #0d2c54;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .announcement-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Quick Links Section */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-link-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .quick-link-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f37021, #e55a0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .quick-link-title {
+            color: #0d2c54;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-link-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0d2c54;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .search-controls {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .filter-select {
+                min-width: auto;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .search-section, .announcements-section, .quick-link-card {
+                padding: 1.5rem;
+            }
+
+            .announcement-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Filter Pills */
+        .filter-pills {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-pill {
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-pill.active {
+            background: #f37021;
+            color: white;
+            border-color: #f37021;
+        }
+
+        .filter-pill:hover {
+            background: #0078d7;
+            color: white;
+            border-color: #0078d7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="announcements_page.html">Announcements</a></li>
+                <li><a href="events_page.html">Events</a></li>
+                <li><a href="placements_page.html">Placements</a></li>
+                <li><a href="research_blogs_page.html">Blogs/Research</a></li>
+                <li><a href="library.html" class="active">Library</a></li>
+            </ul>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-book"></i> Library Resources</h1>
+            <p>Discover a world of knowledge with our extensive digital library collection</p>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-controls">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for books, journals, research papers..." id="searchInput">
+                </div>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="computer-science">Computer Science</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="management">Management</option>
+                    <option value="sciences">Sciences</option>
+                    <option value="literature">Literature</option>
+                </select>
+                <button class="search-btn" onclick="performSearch()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            
+            <div class="filter-pills">
+                <span class="filter-pill active" onclick="filterResources('all')">All Resources</span>
+                <span class="filter-pill" onclick="filterResources('books')">Books</span>
+                <span class="filter-pill" onclick="filterResources('journals')">Journals</span>
+                <span class="filter-pill" onclick="filterResources('ebooks')">E-Books</span>
+                <span class="filter-pill" onclick="filterResources('research')">Research Papers</span>
+            </div>
+        </div>
+
+        <!-- New Arrivals Section -->
+        <div class="section-header">
+            <h2>New Arrivals</h2>
+            <a href="#" class="view-all-btn">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="resource-grid" id="newArrivals">
+            <!-- Book Card 1 -->
+            <div class="resource-card" data-category="books">
+                <div class="card-image">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Advanced Algorithms and Data Structures</h3>
+                    <p class="card-author">Dr. Sarah Johnson</p>
+                    <p class="card-category">Computer Science</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="viewResource('book1')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn btn-outline" onclick="reserveResource('book1')">
+                            <i class="fas fa-bookmark"></i> Reserve
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal Card -->
+            <div class="resource-card" data-category="journals">
+                <div class="card-image">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">International Journal of Engineering Research</h3>
+                    <p class="card-author">IEEE Publications</p>
+                    <p class="card-category">Engineering</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="viewResource('journal1')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadResource('journal1')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-Book Card -->
+            <div class="resource-card" data-category="ebooks">
+                <div class="card-image">
+                    <i class="fas fa-tablet-alt"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Digital Marketing Strategies</h3>
+                    <p class="card-author">Prof. Michael Chen</p>
+                    <p class="card-category">Management</p>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" onclick="readOnline('ebook1')">
+                            <i class="fas fa-book-reader"></i> Read Online
+                        </button>
+                        <button class="btn btn-outline" onclick="addToFavorites('ebook1')">
+                            <i class="fas fa-heart"></i> Favorite
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Research Paper Card -->
+            <div class="resource-card" data-category="research">
+                <div class="card-image">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Machine Learning in Healthcare Applications</h3>
+                    <p class="card-author">Dr. Amanda Rodriguez</p>
+                    <p class="card-category">Computer Science</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="viewResource('research1')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadResource('research1')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Announcements -->
+        <div class="section-header">
+            <h2>Library Announcements</h2>
+            <a href="#" class="view-all-btn">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="announcements-section">
+            <div class="announcement-item">
+                <span class="announcement-title">
+                    <i class="fas fa-bullhorn" style="color: #f37021; margin-right: 0.5rem;"></i>
+                    Extended Library Hours During Exam Week
+                </span>
+                <span class="announcement-date">2 days ago</span>
+            </div>
+            <div class="announcement-item">
+                <span class="announcement-title">
+                    <i class="fas fa-book-open" style="color: #0078d7; margin-right: 0.5rem;"></i>
+                    New Digital Collection: IEEE Research Papers Available
+                </span>
+                <span class="announcement-date">5 days ago</span>
+            </div>
+            <div class="announcement-item">
+                <span class="announcement-title">
+                    <i class="fas fa-tools" style="color: #f37021; margin-right: 0.5rem;"></i>
+                    System Maintenance: Online Catalog Unavailable Jan 15
+                </span>
+                <span class="announcement-date">1 week ago</span>
+            </div>
+        </div>
+
+        <!-- Quick Links & Services -->
+        <div class="section-header">
+            <h2>Quick Links & Services</h2>
+        </div>
+
+        <div class="quick-links">
+            <div class="quick-link-card">
+                <div class="quick-link-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="quick-link-title">Library Hours</h3>
+                <div class="quick-link-description">
+                    <p><strong>Monday - Friday:</strong> 8:00 AM - 10:00 PM</p>
+                    <p><strong>Saturday:</strong> 9:00 AM - 8:00 PM</p>
+                    <p><strong>Sunday:</strong> 10:00 AM - 6:00 PM</p>
+                </div>
+                <button class="btn btn-outline" onclick="viewFullSchedule()">
+                    <i class="fas fa-calendar"></i> Full Schedule
+                </button>
+            </div>
+
+            <div class="quick-link-card">
+                <div class="quick-link-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3 class="quick-link-title">Contact Librarian</h3>
+                <div class="quick-link-description">
+                    <p><strong>Email:</strong> library@adityauniversity.edu</p>
+                    <p><strong>Phone:</strong> +91 863 123 4567</p>
+                    <p><strong>Extension:</strong> 2345</p>
+                </div>
+                <button class="btn btn-primary" onclick="contactLibrarian()">
+                    <i class="fas fa-phone"></i> Contact Now
+                </button>
+            </div>
+
+            <div class="quick-link-card">
+                <div class="quick-link-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3 class="quick-link-title">Borrowing & Returns</h3>
+                <div class="quick-link-description">
+                    <p>Manage your borrowed books, view due dates, and renew your loans online.</p>
+                </div>
+                <button class="btn btn-secondary" onclick="manageBorrowings()">
+                    <i class="fas fa-list"></i> Manage Loans
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Aditya Connect. All rights reserved. | Built with ❤️ for our campus community</p>
+    </footer>
+
+    <script>
+        // Dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const category = document.getElementById('categoryFilter').value;
+            
+            console.log('Searching for:', searchTerm, 'in category:', category);
+            
+            // Simulate search loading
+            const searchBtn = document.querySelector('.search-btn');
+            const originalContent = searchBtn.innerHTML;
+            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
+            searchBtn.disabled = true;
+            
+            setTimeout(() => {
+                searchBtn.innerHTML = originalContent;
+                searchBtn.disabled = false;
+                alert(`Search results for "${searchTerm}" ${category ? 'in ' + category : ''} would be displayed here.`);
+            }, 2000);
+        }
+
+        // Filter resources by type
+        function filterResources(type) {
+            const pills = document.querySelectorAll('.filter-pill');
+            const cards = document.querySelectorAll('.resource-card');
+            
+            // Update active pill
+            pills.forEach(pill => pill.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (type === 'all' || card.dataset.category === type) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Resource actions
+        function viewResource(resourceId) {
+            console.log('Viewing resource:', resourceId);
+            alert('Resource details modal would open here with full information, reviews, and availability status.');
+        }
+
+        function reserveResource(resourceId) {
+            console.log('Reserving resource:', resourceId);
+            alert('Resource reserved successfully! You will be notified when it becomes available.');
+        }
+
+        function downloadResource(resourceId) {
+            console.log('Downloading resource:', resourceId);
+            alert('Download started! The file will be available in your downloads folder.');
+        }
+
+        function readOnline(resourceId) {
+            console.log('Reading online:', resourceId);
+            alert('Opening online reader in new tab...');
+        }
+
+        function addToFavorites(resourceId) {
+            console.log('Adding to favorites:', resourceId);
+            const btn = event.target;
+            btn.innerHTML = '<i class="fas fa-heart" style="color: red;"></i> Favorited';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-heart"></i> Favorite';
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // Quick link actions
+        function viewFullSchedule() {
+            alert('Full library schedule modal would open here with detailed hours, holiday schedules, and special events.');
+        }
+
+        function contactLibrarian() {
+            alert('Contact form modal would open here with options for email, phone, or chat support.');
+        }
+
+        function manageBorrowings() {
+            alert('User dashboard would open showing current loans, due dates, renewal options, and borrowing history.');
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Auto-complete search suggestions
+        const searchSuggestions = [
+            'Machine Learning',
+            'Data Structures',
+            'Web Development',
+            'Database Management',
+            'Software Engineering',
+            'Computer Networks',
+            'Artificial Intelligence',
+            'Digital Marketing',
+            'Project Management',
+            'Research Methodology'
+        ];
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const value = e.target.value.toLowerCase();
+            if (value.length > 2) {
+                const matches = searchSuggestions.filter(suggestion => 
+                    suggestion.toLowerCase().includes(value)
+                );
+                // In a real app, you would show these suggestions in a dropdown
+                console.log('Search suggestions:', matches);
+            }
+        });
+
+        // Lazy loading for resource cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize lazy loading
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.resource-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Advanced search modal (placeholder)
+        function openAdvancedSearch() {
+            alert('Advanced search modal would open here with filters for:\n- Publication date range\n- Author\n- Subject\n- Language\n- Availability status\n- Resource type\n- Rating');
+        }
+
+        // Add advanced search trigger
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchSection = document.querySelector('.search-section');
+            const advancedLink = document.createElement('a');
+            advancedLink.href = '#';
+            advancedLink.innerHTML = '<i class="fas fa-sliders-h"></i> Advanced Search';
+            advancedLink.className = 'view-all-btn';
+            advancedLink.style.marginTop = '1rem';
+            advancedLink.style.display = 'inline-block';
+            advancedLink.onclick = (e) => {
+                e.preventDefault();
+                openAdvancedSearch();
+            };
+            searchSection.appendChild(advancedLink);
+        });
+
+        // Resource availability checker
+        function checkAvailability(resourceId) {
+            const availabilityStates = ['Available', 'Checked Out', 'Reserved', 'Processing'];
+            const randomState = availabilityStates[Math.floor(Math.random() * availabilityStates.length)];
+            
+            return {
+                status: randomState,
+                dueDate: randomState === 'Checked Out' ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) : null,
+                location: 'Main Library - Section ' + String.fromCharCode(65 + Math.floor(Math.random() * 10))
+            };
+        }
+
+        // Add availability indicators to cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.resource-card');
+            cards.forEach((card, index) => {
+                const availability = checkAvailability(`resource_${index}`);
+                const statusIndicator = document.createElement('div');
+                statusIndicator.style.cssText = `
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 15px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                `;
+                
+                switch(availability.status) {
+                    case 'Available':
+                        statusIndicator.style.background = '#10b981';
+                        statusIndicator.style.color = 'white';
+                        break;
+                    case 'Checked Out':
+                        statusIndicator.style.background = '#ef4444';
+                        statusIndicator.style.color = 'white';
+                        break;
+                    case 'Reserved':
+                        statusIndicator.style.background = '#f59e0b';
+                        statusIndicator.style.color = 'white';
+                        break;
+                    default:
+                        statusIndicator.style.background = '#6b7280';
+                        statusIndicator.style.color = 'white';
+                }
+                
+                statusIndicator.textContent = availability.status;
+                card.querySelector('.card-image').style.position = 'relative';
+                card.querySelector('.card-image').appendChild(statusIndicator);
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'k':
+                        e.preventDefault();
+                        document.getElementById('searchInput').focus();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        openAdvancedSearch();
+                        break;
+                }
+            }
+        });
+
+        // Add search shortcuts hint
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.placeholder += ' (Ctrl+K to focus)';
+        });
+
+        // Favorites system
+        let favorites = JSON.parse(localStorage.getItem('libraryFavorites') || '[]');
+
+        function updateFavoriteStatus(resourceId) {
+            const isFavorite = favorites.includes(resourceId);
+            const cards = document.querySelectorAll('.resource-card');
+            
+            cards.forEach(card => {
+                const favoriteBtn = card.querySelector('.btn-outline');
+                if (favoriteBtn && favoriteBtn.onclick.toString().includes(resourceId)) {
+                    if (isFavorite) {
+                        favoriteBtn.innerHTML = '<i class="fas fa-heart" style="color: red;"></i> Favorited';
+                        favoriteBtn.style.background = '#fee2e2';
+                        favoriteBtn.style.borderColor = '#fecaca';
+                    }
+                }
+            });
+        }
+
+        // Initialize favorites on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            favorites.forEach(resourceId => {
+                updateFavoriteStatus(resourceId);
+            });
+        });
+
+        // Add resource rating system
+        function rateResource(resourceId, rating) {
+            console.log(`Rating resource ${resourceId} with ${rating} stars`);
+            const ratings = JSON.parse(localStorage.getItem('libraryRatings') || '{}');
+            ratings[resourceId] = rating;
+            localStorage.setItem('libraryRatings', JSON.stringify(ratings));
+            alert(`Thank you for rating this resource ${rating} stars!`);
+        }
+
+        // Add recent searches
+        let recentSearches = JSON.parse(localStorage.getItem('recentLibrarySearches') || '[]');
+
+        function addToRecentSearches(searchTerm) {
+            if (searchTerm && !recentSearches.includes(searchTerm)) {
+                recentSearches.unshift(searchTerm);
+                recentSearches = recentSearches.slice(0, 5); // Keep only last 5
+                localStorage.setItem('recentLibrarySearches', JSON.stringify(recentSearches));
+            }
+        }
+
+        // Update search function to save recent searches
+        const originalPerformSearch = performSearch;
+        performSearch = function() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                addToRecentSearches(searchTerm.trim());
+            }
+            return originalPerformSearch();
+        };
+
+        // Add reading progress tracker
+        function trackReadingProgress(resourceId, progress) {
+            const readingProgress = JSON.parse(localStorage.getItem('readingProgress') || '{}');
+            readingProgress[resourceId] = {
+                progress: progress,
+                lastRead: new Date().toISOString()
+            };
+            localStorage.setItem('readingProgress', JSON.stringify(readingProgress));
+        }
+
+        // Add notification system for due dates
+        function checkDueDates() {
+            // In a real app, this would check the user's borrowed books
+            const mockBorrowedBooks = [
+                { id: 'book1', title: 'Advanced Algorithms', dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000) },
+                { id: 'book2', title: 'Web Development Guide', dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000) }
+            ];
+            
+            const dueSoon = mockBorrowedBooks.filter(book => {
+                const daysUntilDue = Math.ceil((book.dueDate - new Date()) / (1000 * 60 * 60 * 24));
+                return daysUntilDue <= 3;
+            });
+            
+            if (dueSoon.length > 0) {
+                console.log('Books due soon:', dueSoon);
+                // In a real app, show notification banner
+            }
+        }
+
+        // Check due dates on page load
+        document.addEventListener('DOMContentLoaded', checkDueDates);
+
+        // Add export functionality for research
+        function exportCitation(resourceId, format = 'APA') {
+            const mockCitation = {
+                APA: "Johnson, S. (2024). Advanced Algorithms and Data Structures. Academic Press.",
+                MLA: "Johnson, Sarah. Advanced Algorithms and Data Structures. Academic Press, 2024.",
+                Chicago: "Johnson, Sarah. Advanced Algorithms and Data Structures. Academic Press, 2024."
+            };
+            
+            navigator.clipboard.writeText(mockCitation[format]).then(() => {
+                alert(`${format} citation copied to clipboard!`);
+            });
+        }
+
+        // Add social sharing for resources
+        function shareResource(resourceId, platform) {
+            const url = `${window.location.href}?resource=${resourceId}`;
+            const text = "Check out this resource from Aditya Connect Library";
+            
+            switch(platform) {
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+                    break;
+                case 'linkedin':
+                    window.open(`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
+                    break;
+                case 'email':
+                    window.location.href = `mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(url)}`;
+                    break;
+            }
+        }
+
+        console.log('Library page loaded successfully!');
+        console.log('Available features: Search, Filter, Favorites, Citations, Progress Tracking');
+    </script>
+</body>
+</html>

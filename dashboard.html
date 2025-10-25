@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Connect Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #f37021;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: white;
+            margin-right: 0.5rem;
+            font-size: 1.75rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-icon:hover {
+            transform: scale(1.1);
+            background: #ffed4e;
+        }
+
+        .role-selector select {
+            padding: 0.5rem;
+            border: 2px solid white;
+            border-radius: 8px;
+            color: #f37021;
+            font-weight: 500;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Daily Headlines */
+        .daily-headlines {
+            background: #0078d7;
+            color: white;
+            padding: 1rem 0;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 3px solid #f37021;
+        }
+
+        .headlines-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .headlines-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+        }
+
+        .headlines-title i {
+            color: #ffd700;
+        }
+
+       .marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #f4f4f4;
+}
+
+.marquee-content {
+  display: inline-block;
+  font-size: 1rem;
+  padding-left: 100%;
+  animation: scroll 30s linear infinite;
+}
+.marquee-content {
+  color: #080707; /* Yellow */
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll-left 20s linear infinite;
+}
+
+
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            padding: 2rem 1rem;
+            min-height: calc(100vh - 200px);
+            background: #f8f9fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #F4F4F4;
+            border-radius: 15px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section h3 {
+            color: #f37021;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-section h3:before {
+            content: '';
+            width: 3px;
+            height: 20px;
+            background: #f37021;
+            border-radius: 2px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            color: #f37021;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #f37021;
+            cursor: pointer;
+        }
+
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .quick-link:hover {
+            background: #f37021;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quick-link i {
+            color: #f37021;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .quick-link:hover i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .content-title {
+            color: #f37021;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #0078d7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #005bb5;
+            transform: translateY(-2px);
+        }
+
+        .btn-yellow {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .btn-yellow:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #f37021;
+            color: #f37021;
+        }
+
+        .btn-outline:hover {
+            background: #f37021;
+            color: white;
+        }
+
+        /* Content Cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            border-top: 4px solid #f37021;
+        }
+
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+            border-color: #f37021;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-type {
+            background: #f37021;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card-type.headline { background: #0078d7; }
+        .card-type.blog { background: #28a745; }
+        .card-type.event { background: #ff6b6b; }
+        .card-type.placement { background: #8b5cf6; }
+        .card-type.announcement { background: #f37021; }
+        .card-type.library { background: #17a2b8; }
+        .card-type.club { background: #fd7e14; }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .card-action-btn:hover {
+            background: #f8f9fa;
+            color: #f37021;
+        }
+
+        .card-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .card-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .interaction-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .interaction-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .interaction-btn:hover {
+            color: #f37021;
+        }
+
+        .interaction-btn.liked {
+            color: #ff6b6b;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #f37021;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 250px 1fr;
+                gap: 1.5rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                gap: 0;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem 0;
+                border-bottom: 1px solid #eee;
+                color: #333;
+            }
+
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                order: 2;
+                margin-top: 1rem;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .action-buttons {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                min-width: auto;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                padding: 0 0.5rem;
+            }
+
+            .main-container {
+                padding: 0.5rem;
+            }
+
+            .content-card {
+                padding: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Role-specific visibility */
+        .role-content {
+            display: none;
+        }
+
+        .role-content.active {
+            display: block;
+        }
+
+        /* Animation for content transitions */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </div>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="announcements_page.html">Announcements</a>
+                <a href="events_page.html">Events</a>
+                <a href="placements_page.html">Placements</a>
+                <a href="research_blogs_page.html">Research/Blogs</a>
+                <a href="library.html">Library</a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="role-selector">
+                    <select id="roleSelector" onchange="switchRole()">
+                        <option value="guest">Guest</option>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                        <option value="club-head">Club Head</option>
+                        <option value="library-head">Library Head</option>
+                        <option value="operator">Operator</option>
+                    </select>
+                </div>
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Daily Headlines -->
+    <section class="daily-headlines">
+        <div class="headlines-container">
+            <div class="headlines-title">
+                <i class="fas fa-newspaper"></i>
+                Daily Headlines
+            </div>
+            <div class="marquee">
+                <div class="marquee-content">
+                    🎓 Tech Symposium 2025 registration starts Monday | 📚 New AI & ML books available in library | 🏆 CSE Department wins Best Innovation Award | 💼 Google campus recruitment drive next week | 🎉 Annual cultural fest "Spectrum 2025" announced for March
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Filter by Building</h3>
+                <div class="filter-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" checked>
+                        <span>Engineering Block</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" checked>
+                        <span>MBA Block</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" checked>
+                        <span>Pharmacy Block</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" checked>
+                        <span>Other Blocks</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Quick Links</h3>
+                <div class="quick-links">
+                    <a href="events_page.html" class="quick-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                    </a>
+                    <a href="placements_page.html" class="quick-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Placements</span>
+                    </a>
+                    <a href="research_blogs_page.html" class="quick-link">
+                        <i class="fas fa-flask"></i>
+                        <span>Research</span>
+                    </a>
+                    <a href="announcements_page.html" class="quick-link">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Announcements</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Guest Dashboard -->
+            <div class="role-content active" id="guest-content">
+                <div class="content-header">
+                    <h1 class="content-title">Welcome, Guest</h1>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type event">Event</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Faculty Development Program</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-users"></i> 45 registrations</span>
+                            <span><i class="fas fa-calendar"></i> Feb 15-20, 2025</span>
+                        </div>
+                        <p class="card-content">Five-day intensive program on modern teaching methodologies and educational technology...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type blog">Blog</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Research Achievements 2024</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-eye"></i> 856 views</span>
+                            <span><i class="fas fa-share"></i> 34 shares</span>
+                        </div>
+                        <p class="card-content">Annual report highlighting major research publications and achievements across all departments...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type headline">Headline</span>
+                        </div>
+                        <h3 class="card-title">Tech Symposium 2025 Registration Opens</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> Admin</span>
+                            <span><i class="fas fa-clock"></i> 2 hours ago</span>
+                        </div>
+                        <p class="card-content">Annual technology symposium featuring industry leaders and innovation showcases. Register now for early bird discounts.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type event">Event</span>
+                        </div>
+                        <h3 class="card-title">Cultural Fest "Spectrum 2025"</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> March 15-17, 2025</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Main Campus</span>
+                        </div>
+                        <p class="card-content">Three days of cultural events, competitions, and performances. Registration for participants starts next week.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">Announcement</span>
+                        </div>
+                        <h3 class="card-title">Library Timing Changes</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> Library Head</span>
+                            <span><i class="fas fa-clock"></i> 1 day ago</span>
+                        </div>
+                        <p class="card-content">Extended library hours during exam period. Open 24/7 from February 1st to March 15th.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Dashboard -->
+            <div class="role-content" id="student-content">
+                <div class="content-header">
+                    <h1 class="content-title">Student Dashboard</h1>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type headline">Headline</span>
+                        </div>
+                        <h3 class="card-title">Tech Symposium 2025 Registration Opens</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> Admin</span>
+                            <span><i class="fas fa-clock"></i> 2 hours ago</span>
+                        </div>
+                        <p class="card-content">Annual technology symposium featuring industry leaders and innovation showcases. Register now for early bird discounts.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type blog">Blog</span>
+                        </div>
+                        <h3 class="card-title">AI in Healthcare: Student Research Spotlight</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> Sarah Chen</span>
+                            <span><i class="fas fa-clock"></i> 5 hours ago</span>
+                        </div>
+                        <p class="card-content">Final year student shares insights on machine learning applications in medical diagnosis...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type event">Event</span>
+                        </div>
+                        <h3 class="card-title">Hackathon 2025: Code for Change</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> February 10-12, 2025</span>
+                            <span><i class="fas fa-trophy"></i> ₹1,00,000 Prize Pool</span>
+                        </div>
+                        <p class="card-content">48-hour hackathon focusing on social impact solutions. Team registration open until February 5th.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div class="role-content" id="admin-content">
+                <div class="content-header">
+                    <h1 class="content-title">Admin Dashboard</h1>
+                    <div class="action-buttons">
+                        <a href="#create" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Create New Post
+                        </a>
+                        <a href="#manage" class="btn btn-primary">
+                            <i class="fas fa-users-cog"></i> Manage Users
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">Announcement</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Library Timing Changes</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> Library Head</span>
+                            <span><i class="fas fa-clock"></i> 1 day ago</span>
+                        </div>
+                        <p class="card-content">Extended library hours during exam period. Open 24/7 from February 1st to March 15th.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type headline">Headline</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Admin Notice: Portal Maintenance</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user"></i> System Admin</span>
+                            <span><i class="fas fa-clock"></i> 3 days ago</span>
+                        </div>
+                        <p class="card-content">The student portal will be down for maintenance on Saturday, 9 PM to 11 PM.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Head Dashboard -->
+            <div class="role-content" id="club-head-content">
+                <div class="content-header">
+                    <h1 class="content-title">Club Head Dashboard</h1>
+                    <div class="action-buttons">
+                        <a href="#create-club-update" class="btn btn-yellow">
+                            <i class="fas fa-plus"></i> Create Club Update
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type club">Club Event</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Robotics Club Workshop</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-users"></i> 67 registered</span>
+                            <span><i class="fas fa-calendar"></i> Feb 8, 2025</span>
+                        </div>
+                        <p class="card-content">Hands-on workshop on Arduino programming and sensor integration. Build your own line-following robot!</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>42</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>15</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type club">Club Update</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">New Club Members Welcome</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-user-plus"></i> 23 new members</span>
+                            <span><i class="fas fa-clock"></i> 2 days ago</span>
+                        </div>
+                        <p class="card-content">Welcome to our newest Robotics Club members! Orientation session scheduled for this Friday...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type event">General Event</span>
+                        </div>
+                        <h3 class="card-title">Inter-College Competition</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-trophy"></i> Competition</span>
+                            <span><i class="fas fa-calendar"></i> March 1-3, 2025</span>
+                        </div>
+                        <p class="card-content">Annual inter-college robotics competition. Registration deadline: February 20th.</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>78</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>29</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">General</span>
+                        </div>
+                        <h3 class="card-title">Lab Equipment Maintenance</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-tools"></i> Maintenance</span>
+                            <span><i class="fas fa-calendar"></i> Feb 10-12, 2025</span>
+                        </div>
+                        <p class="card-content">Robotics lab will be closed for scheduled maintenance and equipment upgrades.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library Head Dashboard -->
+            <div class="role-content" id="library-head-content">
+                <div class="content-header">
+                    <h1 class="content-title">Library Head Dashboard</h1>
+                    <div class="action-buttons">
+                        <a href="#post-library-notice" class="btn btn-yellow">
+                            <i class="fas fa-plus"></i> Post Library Notice
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type library">New Arrivals</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">AI & Machine Learning Book Collection</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-book"></i> 45 new books</span>
+                            <span><i class="fas fa-calendar"></i> Just arrived</span>
+                        </div>
+                        <p class="card-content">Latest books on artificial intelligence, machine learning, and data science now available for borrowing...</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>156</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>43</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type library">Notice</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Extended Library Hours</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 24/7 Access</span>
+                            <span><i class="fas fa-calendar"></i> Feb 1 - Mar 15</span>
+                        </div>
+                        <p class="card-content">Library will remain open 24/7 during exam period to support student preparation...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">General</span>
+                        </div>
+                        <h3 class="card-title">Digital Library Access</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-laptop"></i> Online Resources</span>
+                            <span><i class="fas fa-globe"></i> 24/7 Available</span>
+                        </div>
+                        <p class="card-content">Access to IEEE, ACM, and Springer digital libraries now available through campus network...</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>92</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>27</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type library">Workshop</span>
+                        </div>
+                        <h3 class="card-title">Research Paper Writing Workshop</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-users"></i> Limited seats</span>
+                            <span><i class="fas fa-calendar"></i> Feb 14, 2025</span>
+                        </div>
+                        <p class="card-content">Learn effective research paper writing techniques from published authors and researchers...</p>
+                        <div class="card-footer">
+                            <a href="#register" class="btn btn-primary">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operator Dashboard -->
+            <div class="role-content" id="operator-content">
+                <div class="content-header">
+                    <h1 class="content-title">Operator Dashboard</h1>
+                    <div class="action-buttons">
+                        <a href="#post-university-update" class="btn btn-yellow">
+                            <i class="fas fa-plus"></i> Post University Update
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-grid fade-in">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">University Update</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Campus WiFi Upgrade Complete</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-wifi"></i> Infrastructure</span>
+                            <span><i class="fas fa-calendar"></i> Today</span>
+                        </div>
+                        <p class="card-content">High-speed WiFi upgrade across all campus buildings is now complete. New network: AdityaCampus_5G</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>234</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>67</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">Policy Update</span>
+                            <div class="card-actions">
+                                <button class="card-action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="card-action-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 class="card-title">New Academic Calendar Released</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Academic Year 2025-26</span>
+                            <span><i class="fas fa-clock"></i> 3 hours ago</span>
+                        </div>
+                        <p class="card-content">Academic calendar for 2025-26 is now available. Important dates and holidays included...</p>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type headline">General</span>
+                        </div>
+                        <h3 class="card-title">Campus Sustainability Initiative</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-leaf"></i> Green Campus</span>
+                            <span><i class="fas fa-users"></i> Community</span>
+                        </div>
+                        <p class="card-content">Join our green campus initiative. Solar panel installation and waste reduction programs launching...</p>
+                        <div class="card-footer">
+                            <div class="interaction-buttons">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-heart"></i> <span>189</span>
+                                </button>
+                                <button class="interaction-btn">
+                                    <i class="fas fa-comment"></i> <span>45</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <span class="card-type announcement">Maintenance</span>
+                        </div>
+                        <h3 class="card-title">Scheduled Maintenance Notice</h3>
+                        <div class="card-meta">
+                            <span><i class="fas fa-tools"></i> Campus Services</span>
+                            <span><i class="fas fa-calendar"></i> This Weekend</span>
+                        </div>
+                        <p class="card-content">Water supply will be temporarily suspended on Saturday 6 AM - 2 PM for pipeline maintenance...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="privacyPolicy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+            <a href="help_support.html" class="footer-link">Help & Support</a>
+            <a href="aditya_about_page.html" class="footer-link">About Aditya</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-open');
+            const icon = mobileMenuToggle.querySelector('i');
+            if (navLinks.classList.contains('mobile-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('mobile-open');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Role switching functionality
+        function switchRole() {
+            const roleSelector = document.getElementById('roleSelector');
+            const selectedRole = roleSelector.value;
+            
+            // Hide all role content
+            document.querySelectorAll('.role-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected role content
+            const targetContent = document.getElementById(selectedRole + '-content');
+            if (targetContent) {
+                targetContent.classList.add('active');
+                targetContent.classList.add('fade-in');
+                
+                // Remove fade-in class after animation
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }
+        }
+
+        // Like button functionality
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+            const countSpan = btn.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            
+            if (btn.classList.contains('liked')) {
+                count++;
+                btn.style.color = '#ff6b6b';
+            } else {
+                count--;
+                btn.style.color = '#666';
+            }
+            
+            countSpan.textContent = count;
+        }
+
+        // Add click handlers for interaction buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.interaction-btn')) {
+                const btn = e.target.closest('.interaction-btn');
+                if (btn.querySelector('.fa-heart')) {
+                    toggleLike(btn);
+                }
+            }
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.checkbox-item input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Here you would implement actual filtering logic
+                console.log('Filter changed:', this.nextElementSibling.textContent, this.checked);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Card hover effects
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Action button click handlers
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    console.log('Action:', this.textContent.trim());
+                    
+                    // Add click animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }
+            });
+        });
+
+        // Card action buttons
+        document.querySelectorAll('.card-action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const action = this.getAttribute('title');
+                console.log('Card action:', action);
+                
+                // Add visual feedback
+                this.style.background = '#f37021';
+                this.style.color = 'white';
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 200);
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all content cards for scroll animations
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Initialize with guest role
+        document.addEventListener('DOMContentLoaded', function() {
+            switchRole();
+        });
+    </script>
+</body>
+</html>

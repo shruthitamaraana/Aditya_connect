@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Aditya Connect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #ffffff;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #f97316;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #f97316;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #ea580c;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 12px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #f97316;
+        }
+
+        .nav-link.active {
+            color: #f97316;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #f97316;
+            border-radius: 2px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #374151;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 25px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #f97316;
+            margin-bottom: 15px;
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .effective-date {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #f97316;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f97316;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: counter(section-counter);
+            counter-increment: section-counter;
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: #f97316;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        .main-content {
+            counter-reset: section-counter;
+        }
+
+        .section-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .section-content p {
+            margin-bottom: 18px;
+        }
+
+        .section-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .section-content li::marker {
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        .subsection-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f97316;
+            margin: 25px 0 15px 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3e2 0%, #fed7aa 100%);
+            border: 1px solid #f97316;
+            border-left: 5px solid #f97316;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
+        }
+
+        .highlight-box h4 {
+            color: #f97316;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .warning-box {
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-left: 5px solid #ef4444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box h4 {
+            color: #dc2626;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contact-section h3 {
+            color: #f97316;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .contact-email {
+            color: #f97316;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-email:hover {
+            border-bottom-color: #f97316;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1f2937;
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .footer-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #ffffff;
+                flex-direction: column;
+                padding: 25px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+                gap: 20px;
+                border-top: 2px solid #f97316;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .page-subtitle {
+                font-size: 18px;
+            }
+
+            .main-content {
+                padding: 40px 20px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .section-content {
+                font-size: 16px;
+            }
+
+            .highlight-box, .contact-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 28px;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .main-content {
+                padding: 30px 15px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .section-title::before {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .footer {
+                display: none;
+            }
+            
+            .main-content {
+                max-width: none;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="aditya_about_page.html" class="logo">Aditya Connect</a>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="aditya_about_page.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="privacyPolicy.html" class="nav-link">Privacy</a></li>
+                    <li class="nav-item"><a href="terms.html" class="nav-link active">Terms</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Terms & Conditions</h1>
+            <p class="page-subtitle">Please read these terms carefully before using Aditya Connect. By accessing our platform, you agree to be bound by these terms and conditions.</p>
+            <p class="effective-date">Effective Date: January 1, 2025</p>
+        </div>
+
+        <!-- Introduction Section -->
+        <section class="section">
+            <h2 class="section-title">Introduction and Scope</h2>
+            <div class="section-content">
+                <p>Welcome to Aditya Connect, the official educational communication and collaboration platform exclusively designed for the Aditya Educational Institutions community. These Terms and Conditions ("Terms") govern your access to and use of our platform, including all services, features, and content provided.</p>
+                
+                <p>Aditya Connect serves as a dedicated digital space for students, faculty, and staff of Aditya Educational Institutions to engage in academic discussions, share educational resources, collaborate on projects, and build meaningful connections within our institutional community.</p>
+
+                <div class="highlight-box">
+                    <h4>Important Notice:</h4>
+                    <p>This platform is exclusively intended for members of the Aditya Educational Institutions community. Access is restricted to current students, faculty, staff, and authorized personnel only. By using Aditya Connect, you acknowledge that you are an authorized member of our educational community.</p>
+                </div>
+
+                <p>These Terms constitute a legally binding agreement between you and Aditya Educational Institutions. If you do not agree with any part of these Terms, you must not access or use Aditya Connect.</p>
+
+                <h3 class="subsection-title">Platform Purpose:</h3>
+                <ul>
+                    <li>Facilitate academic communication and collaboration among institutional members</li>
+                    <li>Provide a secure environment for sharing educational content and resources</li>
+                    <li>Enable networking and community building within our educational ecosystem</li>
+                    <li>Support student-faculty interaction and academic mentorship</li>
+                    <li>Enhance the overall educational experience through digital connectivity</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Account Responsibility Section -->
+        <section class="section">
+            <h2 class="section-title">Account Responsibility and Eligibility</h2>
+            <div class="section-content">
+                <p>Account creation and maintenance on Aditya Connect comes with specific responsibilities and requirements that ensure the security and integrity of our educational community.</p>
+
+                <h3 class="subsection-title">Eligibility Requirements:</h3>
+                <ul>
+                    <li><strong>Institutional Affiliation:</strong> Only current students, faculty, staff, and authorized personnel of Aditya Educational Institutions are eligible to create accounts</li>
+                    <li><strong>Official Email Requirement:</strong> You must use your official institutional email address (ending with @aditya.edu or other approved institutional domains) to register</li>
+                    <li><strong>Identity Verification:</strong> You may be required to provide additional verification of your institutional status during the registration process</li>
+                    <li><strong>Single Account Policy:</strong> Each individual is permitted only one active account on the platform</li>
+                </ul>
+
+                <h3 class="subsection-title">Account Security Responsibilities:</h3>
+                <ul>
+                    <li><strong>Password Security:</strong> You are responsible for creating and maintaining a strong, unique password for your account</li>
+                    <li><strong>Login Credentials:</strong> Keep your login information confidential and do not share your account with others</li>
+                    <li><strong>Unauthorized Access:</strong> Immediately report any suspected unauthorized access to your account to our support team</li>
+                    <li><strong>Account Activity:</strong> You are fully responsible for all activities that occur under your account</li>
+                    <li><strong>Regular Updates:</strong> Keep your profile information current and accurate, including contact details and academic status</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Security Warning:</h4>
+                    <p>Sharing your account credentials with others or allowing unauthorized access to your account may result in immediate account suspension and disciplinary action through the institution's academic conduct procedures.</p>
+                </div>
+
+                <h3 class="subsection-title">Account Maintenance:</h3>
+                <p>You agree to promptly update your account information if there are any changes to your institutional status, contact information, or academic affiliation. Failure to maintain accurate account information may result in account restrictions or termination.</p>
+            </div>
+        </section>
+
+        <!-- User Behavior Section -->
+        <section class="section">
+            <h2 class="section-title">Acceptable Use and User Behavior</h2>
+            <div class="section-content">
+                <p>Aditya Connect is committed to maintaining a respectful, inclusive, and academically focused environment. All users are expected to conduct themselves in a manner that reflects the values and standards of our educational institution.</p>
+
+                <h3 class="subsection-title">Prohibited Behaviors:</h3>
+                <ul>
+                    <li><strong>Abusive Language:</strong> Use of offensive, discriminatory, harassing, or threatening language toward any community member</li>
+                    <li><strong>Spam and Irrelevant Content:</strong> Posting repetitive, commercial, or non-academic content that clutters the platform</li>
+                    <li><strong>Misinformation:</strong> Sharing false information, fake news, or deliberately misleading content</li>
+                    <li><strong>Academic Dishonesty:</strong> Facilitating cheating, plagiarism, or other forms of academic misconduct</li>
+                    <li><strong>Cyberbullying:</strong> Engaging in any form of online harassment, intimidation, or bullying</li>
+                    <li><strong>Impersonation:</strong> Pretending to be someone else or creating fake profiles</li>
+                    <li><strong>Privacy Violations:</strong> Sharing personal information of others without their consent</li>
+                </ul>
+
+                <h3 class="subsection-title">Expected Standards:</h3>
+                <ul>
+                    <li><strong>Academic Focus:</strong> All content should be relevant to educational activities, academic discussions, or institutional life</li>
+                    <li><strong>Respectful Communication:</strong> Engage in constructive dialogue and treat all community members with dignity and respect</li>
+                    <li><strong>Intellectual Property:</strong> Respect copyright laws and properly attribute sources when sharing content</li>
+                    <li><strong>Professional Conduct:</strong> Maintain appropriate professional standards in all interactions</li>
+                    <li><strong>Constructive Participation:</strong> Contribute positively to discussions and help build a supportive learning environment</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Community Guidelines:</h4>
+                    <p>Remember that Aditya Connect reflects our institutional community. Your behavior on this platform should align with the same standards of conduct expected in physical classroom and campus environments. We encourage open academic discourse while maintaining mutual respect and professionalism.</p>
+                </div>
+
+                <h3 class="subsection-title">Reporting Violations:</h3>
+                <p>If you encounter inappropriate behavior or content that violates these guidelines, please report it immediately using the platform's reporting tools or by contacting our support team. All reports will be investigated promptly and handled with appropriate confidentiality.</p>
+            </div>
+        </section>
+
+        <!-- Content Policy Section -->
+        <section class="section">
+            <h2 class="section-title">Content Policy and Intellectual Property</h2>
+            <div class="section-content">
+                <p>All content shared on Aditya Connect is subject to review and moderation to ensure compliance with our community standards and educational objectives. This section outlines our policies regarding content creation, sharing, and ownership.</p>
+
+                <h3 class="subsection-title">Content Moderation:</h3>
+                <ul>
+                    <li><strong>Administrative Review:</strong> All posts, comments, and shared content may be reviewed by platform administrators and authorized faculty moderators</li>
+                    <li><strong>Content Standards:</strong> Content must be educational, appropriate, and aligned with institutional values</li>
+                    <li><strong>Removal Authority:</strong> Administrators reserve the right to remove any content that violates these terms or community guidelines</li>
+                    <li><strong>Appeal Process:</strong> Users may appeal content removal decisions through our formal review process</li>
+                </ul>
+
+                <h3 class="subsection-title">Content Ownership and Rights:</h3>
+                <ul>
+                    <li><strong>User Content:</strong> You retain ownership of the original content you create and share on the platform</li>
+                    <li><strong>Platform License:</strong> By posting content, you grant Aditya Connect a non-exclusive, worldwide license to use, display, and distribute your content within the platform</li>
+                    <li><strong>Educational Use:</strong> Your shared content may be used for educational purposes within the institutional context</li>
+                    <li><strong>Attribution:</strong> Proper attribution will be maintained for all user-generated content used for educational purposes</li>
+                </ul>
+
+                <h3 class="subsection-title">Acceptable Content Types:</h3>
+                <ul>
+                    <li>Academic discussions and scholarly debates</li>
+                    <li>Educational resources and study materials</li>
+                    <li>Research findings and academic papers (with proper permissions)</li>
+                    <li>Institutional announcements and updates</li>
+                    <li>Student organization activities and events</li>
+                    <li>Career guidance and professional development content</li>
+                    <li>Collaborative project discussions and planning</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Copyright Notice:</h4>
+                    <p>Users are responsible for ensuring they have the right to share any copyrighted material. Sharing copyrighted content without proper authorization may result in content removal and potential account restrictions. Always respect intellectual property rights and provide proper citations for academic sources.</p>
+                </div>
+
+                <h3 class="subsection-title">Content Guidelines:</h3>
+                <p>All content should contribute to the educational mission of our institution. Personal opinions are welcome in academic discussions but should be expressed respectfully and constructively. Commercial content, advertisements, and promotional materials are strictly prohibited unless specifically authorized by administration.</p>
+            </div>
+        </section>
+
+        <!-- Account Termination Section -->
+        <section class="section">
+            <h2 class="section-title">Account Termination and Disciplinary Actions</h2>
+            <div class="section-content">
+                <p>Aditya Educational Institutions reserves the right to take appropriate disciplinary actions, including account restrictions or termination, for violations of these Terms and Conditions or institutional policies.</p>
+
+                <h3 class="subsection-title">Grounds for Account Action:</h3>
+                <ul>
+                    <li><strong>Terms Violation:</strong> Any breach of these Terms and Conditions or community guidelines</li>
+                    <li><strong>Academic Misconduct:</strong> Use of the platform to facilitate cheating, plagiarism, or other academic dishonesty</li>
+                    <li><strong>Inappropriate Behavior:</strong> Harassment, bullying, discrimination, or other conduct violations</li>
+                    <li><strong>Security Breaches:</strong> Attempting to access unauthorized areas or compromise platform security</li>
+                    <li><strong>Institutional Status:</strong> Loss of affiliation with Aditya Educational Institutions</li>
+                    <li><strong>Legal Requirements:</strong> Compliance with legal obligations or court orders</li>
+                </ul>
+
+                <h3 class="subsection-title">Progressive Disciplinary Process:</h3>
+                <ul>
+                    <li><strong>Warning:</strong> Initial violations may result in official warnings and educational guidance</li>
+                    <li><strong>Temporary Suspension:</strong> Repeated or serious violations may lead to temporary account suspension</li>
+                    <li><strong>Content Restrictions:</strong> Limitations on posting or commenting capabilities</li>
+                    <li><strong>Permanent Termination:</strong> Severe or persistent violations may result in permanent account closure</li>
+                    <li><strong>Institutional Referral:</strong> Serious misconduct may be referred to appropriate institutional disciplinary bodies</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Due Process:</h4>
+                    <p>Before any major disciplinary action is taken, users will be provided with notice of the alleged violation and an opportunity to respond. We are committed to fair and transparent procedures that align with our institutional values of justice and academic integrity.</p>
+                </div>
+
+                <h3 class="subsection-title">Appeal Rights:</h3>
+                <p>Users have the right to appeal disciplinary decisions through our formal appeal process. Appeals must be submitted in writing within 14 days of the disciplinary action and will be reviewed by an independent panel of faculty and administrators.</p>
+
+                <h3 class="subsection-title">Post-Termination:</h3>
+                <p>Upon account termination, users lose access to all platform features and content. However, certain information may be retained as required by institutional record-keeping policies or legal obligations. Users may request data export before termination, subject to technical feasibility and policy compliance.</p>
+            </div>
+        </section>
+
+        <!-- Modifications Section -->
+        <section class="section">
+            <h2 class="section-title">Terms Modifications and Updates</h2>
+            <div class="section-content">
+                <p>Aditya Educational Institutions reserves the right to modify these Terms and Conditions as needed to reflect changes in our services, legal requirements, or institutional policies. We are committed to transparent communication about any changes that may affect your use of the platform.</p>
+
+                <h3 class="subsection-title">Modification Process:</h3>
+                <ul>
+                    <li><strong>Advance Notice:</strong> Major changes will be communicated to all users at least 30 days before implementation</li>
+                    <li><strong>Email Notification:</strong> All registered users will receive email notifications about significant terms updates</li>
+                    <li><strong>Platform Announcements:</strong> Important changes will be prominently featured on the platform homepage</li>
+                    <li><strong>Version Control:</strong> Updated terms will include effective dates and version numbers for reference</li>
+                    <li><strong>Change Summary:</strong> A clear summary of modifications will be provided with each update</li>
+                </ul>
+
+                <h3 class="subsection-title">Types of Modifications:</h3>
+                <ul>
+                    <li><strong>Minor Updates:</strong> Clarifications, formatting changes, and minor policy adjustments</li>
+                    <li><strong>Feature Changes:</strong> Updates related to new platform features or functionality</li>
+                    <li><strong>Legal Compliance:</strong> Changes required by new laws, regulations, or institutional policies</li>
+                    <li><strong>Security Enhancements:</strong> Updates related to platform security and data protection</li>
+                    <li><strong>Community Standards:</strong> Revisions to community guidelines and behavioral expectations</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Your Rights During Changes:</h4>
+                    <p>When significant changes are made to these Terms, you have the right to review the modifications and decide whether to continue using the platform. If you disagree with the changes, you may discontinue use of Aditya Connect. Continued use after the effective date of changes constitutes acceptance of the updated Terms.</p>
+                </div>
+
+                <h3 class="subsection-title">Staying Informed:</h3>
+                <p>We encourage all users to periodically review these Terms and Conditions. You can always find the most current version on our platform, along with the effective date of the last update. For questions about specific changes or their implications, please contact our support team.</p>
+
+                <h3 class="subsection-title">Feedback and Input:</h3>
+                <p>We value community input on our terms and policies. Users are encouraged to provide feedback about proposed changes during notice periods. While we cannot guarantee that all suggestions will be implemented, we carefully consider all community feedback in our decision-making process.</p>
+            </div>
+        </section>
+
+        <!-- Contact Information Section -->
+        <section class="section">
+            <h2 class="section-title">Contact Information and Support</h2>
+            <div class="section-content">
+                <p>We are committed to providing excellent support to our educational community. If you have questions, concerns, or need assistance with any aspect of Aditya Connect, please don't hesitate to reach out to our dedicated support team.</p>
+
+                <h3 class="subsection-title">How to Contact Us:</h3>
+                <ul>
+                    <li><strong>General Support:</strong> For technical issues, account problems, or general platform questions</li>
+                    <li><strong>Policy Questions:</strong> For clarification about these Terms and Conditions or community guidelines</li>
+                    <li><strong>Reporting Issues:</strong> To report inappropriate content, user behavior, or security concerns</li>
+                    <li><strong>Feature Requests:</strong> To suggest improvements or new features for the platform</li>
+                    <li><strong>Academic Support:</strong> For educational content questions or collaboration assistance</li>
+                </ul>
+
+                <div class="contact-section">
+                    <h3>Get in Touch</h3>
+                    <p>For all inquiries, concerns, or support requests, please contact us at:</p>
+                    <a href="mailto:support@adityaconnect.in" class="contact-email">support@adityaconnect.in</a>
+                    <p style="margin-top: 20px; color: #6b7280; font-size: 16px;">
+                        Our support team typically responds within 24-48 hours during business days. For urgent issues, please mark your email as "Urgent" in the subject line.
+                    </p>
+                </div>
+
+                <h3 class="subsection-title">Additional Support Resources:</h3>
+                <ul>
+                    <li><strong>Help Documentation:</strong> Comprehensive guides and tutorials available within the platform</li>
+                    <li><strong>FAQ Section:</strong> Frequently asked questions covering common issues and procedures</li>
+                    <li><strong>Community Forums:</strong> Peer-to-peer support and discussion areas</li>
+                    <li><strong>Video Tutorials:</strong> Step-by-step visual guides for platform features</li>
+                    <li><strong>Live Chat:</strong> Real-time support during designated hours (when available)</li>
+                </ul>
+
+                <h3 class="subsection-title">Response Times:</h3>
+                <p>We strive to provide timely responses to all inquiries. General questions typically receive responses within 24-48 hours, while urgent technical issues are prioritized for faster resolution. Complex policy questions or appeals may require additional time for thorough review and response.</p>
+
+                <div class="highlight-box">
+                    <h4>Before Contacting Support:</h4>
+                    <p>To help us assist you more effectively, please check our help documentation and FAQ section first. When contacting support, include relevant details such as your account information, specific error messages, and steps you've already tried to resolve the issue.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legal and Final Provisions -->
+        <section class="section">
+            <h2 class="section-title">Legal Provisions and Final Terms</h2>
+            <div class="section-content">
+                <p>These Terms and Conditions, along with our Privacy Policy, constitute the complete agreement between you and Aditya Educational Institutions regarding your use of Aditya Connect.</p>
+
+                <h3 class="subsection-title">Governing Law:</h3>
+                <p>These Terms are governed by the laws of India and the State of Andhra Pradesh. Any disputes arising from the use of Aditya Connect will be subject to the exclusive jurisdiction of the courts in East Godavari District, Andhra Pradesh.</p>
+
+                <h3 class="subsection-title">Severability:</h3>
+                <p>If any provision of these Terms is found to be unenforceable or invalid, the remaining provisions will continue to be valid and enforceable to the fullest extent permitted by law.</p>
+
+                <h3 class="subsection-title">Waiver:</h3>
+                <p>The failure of Aditya Educational Institutions to enforce any right or provision of these Terms will not constitute a waiver of such right or provision.</p>
+
+                <div class="highlight-box">
+                    <h4>Acknowledgment:</h4>
+                    <p>By using Aditya Connect, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. You also acknowledge that these Terms may be updated from time to time, and continued use of the platform constitutes acceptance of any modifications.</p>
+                </div>
+
+                <p><strong>Last Updated:</strong> January 1, 2025</p>
+                <p><strong>Version:</strong> 1.0</p>
+                <p>Thank you for being part of the Aditya Connect community.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Aditya Connect. All Rights Reserved.</p>
+        <p class="footer-subtitle">A dedicated platform for Aditya Educational Institutions.</p>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

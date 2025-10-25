@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Connect - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: #f37021;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: #0d2c54;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .back-to-home {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-home:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-3px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        /* Left Side - Visual */
+        .login-visual {
+            background: linear-gradient(135deg, #0d2c54 0%, #0078d7 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        .visual-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .visual-icon {
+            font-size: 4rem;
+            color: #f37021;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .visual-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #f37021;
+        }
+
+        .visual-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Right Side - Form */
+        .login-form-container {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h1 {
+            color: #0d2c54;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            margin-bottom: 2rem;
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 0.25rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0d2c54;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #0078d7;
+            font-size: 1.1rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #f37021;
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23666"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 20px;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            accent-color: #f37021;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #f37021;
+            color: white;
+            box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #e55a0b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 112, 33, 0.6);
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 215, 0.6);
+        }
+
+        /* Links */
+        .forgot-password {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .forgot-password a {
+            color: #0078d7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #f37021;
+        }
+
+        /* Sign Up Section */
+        .signup-section {
+            display: none;
+        }
+
+        .signup-section.active {
+            display: block;
+        }
+
+        /* Verification */
+        .verification-code {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .code-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .code-input:focus {
+            border-color: #f37021;
+            outline: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0d2c54;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f37021;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .login-visual {
+                display: none;
+            }
+
+            .login-form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-input, .form-select {
+                padding: 0.875rem 0.875rem 0.875rem 2.5rem;
+            }
+
+            .input-group i {
+                left: 0.75rem;
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 0.875rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideIn 0.6s ease 0.2s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<script>
+  function redirectToAccount() {
+    window.location.href = "account_details.html";
+  }
+</script>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </div>
+            <a href="landing.html" class="back-to-home">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="login-container fade-in">
+            <!-- Left Side - Visual -->
+            <div class="login-visual">
+                <div class="visual-content">
+                    <div class="visual-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h2>Welcome Back!</h2>
+                    <p>Connect with your campus community and stay updated with the latest academic opportunities, events, and announcements.</p>
+                </div>
+            </div>
+
+            <!-- Right Side - Form -->
+            <div class="login-form-container slide-in">
+                <div class="form-header">
+                    <h1>Aditya Connect</h1>
+                    <p>Login / Signup</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button onclick="redirectToAccount()" class="btn btn-primary">Login</button>
+                    <a href="sign up page.html" class="tab-btn">Sign Up</a>
+
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-section" id="loginForm">
+                    <!-- Role Selection -->
+                    <div class="form-group">
+                        <label for="userRole">Select Your Role</label>
+                        <div class="input-group">
+                            <i class="fas fa-user-tag"></i>
+                            <select class="form-select" id="userRole" required>
+                                <option value="">Choose your role...</option>
+                                <option value="guest">Guest</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="admin">Admin</option>
+                                <option value="operator">Operator</option>
+                                <option value="library">Library Head</option>
+                                <option value="club">Club Head</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Email/Username -->
+                    <div class="form-group">
+                        <label for="loginEmail">Email / Username</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="text" class="form-input" id="loginEmail" placeholder="Enter your email or username" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input" id="rememberMe">
+                        <label for="rememberMe" class="checkbox-label">Remember Me</label>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+
+                    <!-- Forgot Password -->
+                    <div class="forgot-password">
+                        <a href="#" onclick="showModal('forgotPassword')">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#">Contact Info</a>
+                <a href="help_support.html">Help</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Aditya University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tab) {
+            const loginSection = document.getElementById('loginForm');
+            const signupSection = document.getElementById('signupForm');
+            const tabButtons = document.querySelectorAll('.tab-btn');
+
+            // Remove active class from all tabs
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            if (tab === 'login') {
+                loginSection.style.display = 'block';
+                signupSection.classList.remove('active');
+                tabButtons[0].classList.add('active');
+            } else {
+                loginSection.style.display = 'none';
+                signupSection.classList.add('active');
+                tabButtons[1].classList.add('active');
+            }
+        }
+
+        // Verification code inputs
+        const codeInputs = document.querySelectorAll('.code-input');
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < codeInputs.length - 1) {
+                    codeInputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    codeInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const role = document.getElementById('userRole').value;
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Validation
+            if (!role) {
+                alert('Please select your role');
+                return;
+            }
+
+            // Simulate login process
+            console.log('Login attempt:', { role, email, password, rememberMe });
+            alert('Login functionality would be implemented here!');
+        });
+
+        // Role-based styling
+        document.getElementById('userRole').addEventListener('change', (e) => {
+            const role = e.target.value;
+            const formContainer = document.querySelector('.login-form-container');
+            
+            // Remove existing role classes
+            formContainer.classList.remove('guest-theme', 'student-theme', 'faculty-theme', 'admin-theme');
+            
+            // Add role-specific styling
+            if (role) {
+                formContainer.classList.add(`${role}-theme`);
+            }
+        });
+
+        // Password strength indicator
+        document.getElementById('newPassword')?.addEventListener('input', (e) => {
+            const password = e.target.value;
+            const strength = calculatePasswordStrength(password);
+            // You can add visual feedback here
+        });
+
+        function calculatePasswordStrength(password) {
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+            return score;
+        }
+
+        // Show modal function (placeholder)
+        function showModal(type) {
+            if (type === 'forgotPassword') {
+                alert('Forgot Password modal would open here!\n\nThis would typically show a form to:\n- Enter email/username\n- Send reset code\n- Reset password');
+            }
+        }
+
+        // Smooth animations on load
+        window.addEventListener('load', () => {
+            document.querySelector('.fade-in').style.animationDelay = '0.1s';
+            document.querySelector('.slide-in').style.animationDelay = '0.3s';
+        });
+
+        // Auto-focus first input
+        window.addEventListener('load', () => {
+            document.getElementById('userRole').focus();
+        });
+    </script>
+</body>
+</html>

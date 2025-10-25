@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background-color: #f37021;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: white;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .role-selector select option {
+            background: #f37021;
+            color: white;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: #f37021;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #f37021;
+        }
+
+        /* Filter Card */
+        .filter-card {
+            background: #f4f4f4;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-title {
+            color: #0d2c54;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .filter-title i {
+            color: #f37021;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #f37021;
+            color: #f37021;
+        }
+
+        .filter-btn.active {
+            background: #f37021;
+            border-color: #f37021;
+            color: white;
+        }
+
+        .filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #f37021;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .filter-dropdown.show {
+            display: block;
+        }
+
+        .filter-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .filter-option:hover {
+            background: #f8f9fa;
+        }
+
+        .filter-option:last-child {
+            border-bottom: none;
+        }
+
+        .filter-option.selected {
+            background: #f37021;
+            color: white;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #0d2c54;
+            color: white;
+            box-shadow: 0 2px 10px rgba(13, 44, 84, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0a1f3a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(13, 44, 84, 0.4);
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        .btn-neutral {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-neutral:hover {
+            background: #545b62;
+        }
+
+        /* Announcements List */
+        .announcements-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .announcements-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcements-title {
+            color: #f37021;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .announcements-title i {
+            color: #f37021;
+            font-size: 1.3rem;
+        }
+
+        .results-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .announcements-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .announcement-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .announcement-item:hover {
+            background: #f8f9fa;
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .announcement-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .announcement-icon.urgent {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .announcement-icon.general {
+            background: rgba(0, 120, 215, 0.1);
+            color: #0078d7;
+        }
+
+        .announcement-icon.academic {
+            background: rgba(243, 112, 33, 0.1);
+            color: #f37021;
+        }
+
+        .announcement-icon.event {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .announcement-content {
+            flex: 1;
+        }
+
+        .announcement-title {
+            color: #0078d7;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            display: block;
+        }
+
+        .announcement-title:hover {
+            color: #f37021;
+        }
+
+        .announcement-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .announcement-snippet {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .announcement-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .read-more {
+            color: #0078d7;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #f37021;
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-urgent {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .priority-high {
+            background: rgba(243, 112, 33, 0.1);
+            color: #f37021;
+        }
+
+        .priority-normal {
+            background: rgba(0, 120, 215, 0.1);
+            color: #0078d7;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f37021;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #f37021;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+                gap: 0;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .user-profile {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .filter-card {
+                padding: 1rem;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .announcements-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .announcement-item {
+                padding: 1rem;
+            }
+
+            .announcement-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .announcement-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .announcement-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .announcements-list {
+                max-height: 500px;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+     <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="aditya_about_page.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </div>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="dashboard.html" >Dashboard</a>
+                <a href="announcements_page.html" class="active">Announcements</a>
+                <a href="events_page.html">Events</a>
+                <a href="placements_page.html">Placements</a>
+                <a href="research_blogs_page.html">Research/Blogs</a>
+                <a href="library.html">Library</a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="role-selector">
+                    <select id="roleSelector" onchange="switchRole()">
+                        <option value="guest">Guest</option>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                        <option value="club-head">Club Head</option>
+                        <option value="library-head">Library Head</option>
+                        <option value="operator">Operator</option>
+                    </select>
+                </div>
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header fade-in">
+            <h1 class="page-title">Announcements</h1>
+            <div class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a> / Announcements
+            </div>
+        </div>
+
+        <!-- Filter Options -->
+        <div class="filter-card fade-in">
+            <h2 class="filter-title">
+                <i class="fas fa-filter"></i>
+                Filter Options
+            </h2>
+            <div class="filter-buttons">
+                <div class="filter-btn" onclick="toggleFilterDropdown('department')">
+                    <i class="fas fa-building"></i>
+                    Department
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="filter-dropdown" id="departmentDropdown">
+                        <div class="filter-option selected" data-value="all">All Departments</div>
+                        <div class="filter-option" data-value="admin">Administration</div>
+                        <div class="filter-option" data-value="academic">Academic Affairs</div>
+                        <div class="filter-option" data-value="student">Student Affairs</div>
+                        <div class="filter-option" data-value="cse">Computer Science & Engineering</div>
+                        <div class="filter-option" data-value="ece">Electronics & Communication</div>
+                        <div class="filter-option" data-value="mech">Mechanical Engineering</div>
+                        <div class="filter-option" data-value="civil">Civil Engineering</div>
+                        <div class="filter-option" data-value="placement">Placement Cell</div>
+                    </div>
+                </div>
+
+                <div class="filter-btn" onclick="toggleFilterDropdown('date')">
+                    <i class="fas fa-calendar"></i>
+                    Date Range
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="filter-dropdown" id="dateDropdown">
+                        <div class="filter-option selected" data-value="all">All Time</div>
+                        <div class="filter-option" data-value="today">Today</div>
+                        <div class="filter-option" data-value="week">This Week</div>
+                        <div class="filter-option" data-value="month">This Month</div>
+                        <div class="filter-option" data-value="quarter">Last 3 Months</div>
+                    </div>
+                </div>
+
+                <div class="filter-btn" onclick="toggleFilterDropdown('role')">
+                    <i class="fas fa-user"></i>
+                    Target Role
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="filter-dropdown" id="roleDropdown">
+                        <div class="filter-option selected" data-value="all">All Roles</div>
+                        <div class="filter-option" data-value="student">Students</div>
+                        <div class="filter-option" data-value="faculty">Faculty</div>
+                        <div class="filter-option" data-value="staff">Staff</div>
+                        <div class="filter-option" data-value="public">Public</div>
+                    </div>
+                </div>
+
+                <div class="filter-btn" onclick="toggleFilterDropdown('priority')">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Priority
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="filter-dropdown" id="priorityDropdown">
+                        <div class="filter-option selected" data-value="all">All Priorities</div>
+                        <div class="filter-option" data-value="urgent">Urgent</div>
+                        <div class="filter-option" data-value="high">High</div>
+                        <div class="filter-option" data-value="normal">Normal</div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-secondary" onclick="resetFilters()">
+                    <i class="fas fa-refresh"></i>
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Announcements List -->
+        <div class="announcements-container fade-in">
+            <div class="announcements-header">
+                <h2 class="announcements-title">
+                    <i class="fas fa-bullhorn"></i>
+                    Recent Announcements
+                </h2>
+                <div class="results-count" id="resultsCount">
+                    Showing 8 of 8 announcements
+                </div>
+            </div>
+            <div class="announcements-list" id="announcementsList">
+                <!-- Announcement Items -->
+                <div class="announcement-item" data-department="admin" data-role="all" data-priority="urgent">
+                    <div class="announcement-header">
+                        <div class="announcement-icon urgent">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="announcement-content">
+                            <a href="#" class="announcement-title">
+                                Emergency: Campus Closure Due to Weather Conditions
+                            </a>
+                            <div class="announcement-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-building"></i>
+                                    Administration
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    January 25, 2025
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    All Users
+                                </div>
+                            </div>
+                            <div class="announcement-snippet">
+                                Due to severe weather conditions and safety concerns, the campus will be closed today. All classes and activities are suspended until further notice. Students are advised to stay in their hostels...
+                            </div>
+                            <div class="announcement-actions">
+                                <a href="#" class="read-more">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <span class="priority-badge priority-urgent">Urgent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-item" data-department="academic" data-role="student" data-priority="high">
+                    <div class="announcement-header">
+                        <div class="announcement-icon academic">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="announcement-content">
+                            <a href="#" class="announcement-title">
+                                Mid-Semester Examination Schedule Released
+                            </a>
+                            <div class="announcement-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-building"></i>
+                                    Academic Affairs
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    January 24, 2025
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    Students
+                                </div>
+                            </div>
+                            <div class="announcement-snippet">
+                                The mid-semester examination schedule has been published on the student portal. Examinations will begin from February 10, 2025. Students are required to download their admit cards...
+                            </div>
+                            <div class="announcement-actions">
+                                <a href="#" class="read-more">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <span class="priority-badge priority-high">High</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-item" data-department="placement" data-role="student" data-priority="high">
+                    <div class="announcement-header">
+                        <div class="announcement-icon event">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="announcement-content">
+                            <a href="#" class="announcement-title">
+                                Microsoft Campus Drive - Registration Open
+                            </a>
+                            <div class="announcement-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-building"></i>
+                                    Placement Cell
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    January 23, 2025
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    Students
+                                </div>
+                            </div>
+                            <div class="announcement-snippet">
+                                Microsoft will be conducting an on-campus placement drive for Software Engineer positions. Eligible students from CSE, ECE, and IT departments can register through the placement portal...
+                            </div>
+                            <div class="announcement-actions">
+                                <a href="#" class="read-more">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <span class="priority-badge priority-high">High</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-item" data-department="student" data-role="all" data-priority="normal">
+                    <div class="announcement-header">
+                        <div class="announcement-icon general">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="announcement-content">
+                            <a href="#" class="announcement-title">
+                                Annual Tech Fest 2025 - Registration Now Open
+                            </a>
+                            <div class="announcement-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-building"></i>
+                                    Student Affairs
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    January 22, 2025
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    All Users
+                                </div>
+                            </div>
+                            <div class="announcement-snippet">
+                                Get ready for the biggest tech festival of the year! Tech Fest 2025 will feature coding competitions, hackathons, technical workshops, and guest lectures from industry experts...
+                            </div>
+                            <div class="announcement-actions">
+                                <a href="#" class="read-more">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <span class="priority-badge priority-normal">Normal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-item" data-department="cse" data-role="student" data-priority="normal">
+                    <div class="announcement-header">
+                        <div class="announcement-icon academic">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="announcement-content">
+                            <a href="#" class="announcement-title">
+                                AI Workshop Series - Week 3 Materials Available
+                            </a>
+                            <div class="announcement-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-building"></i>
+                                    Computer Science & Engineering
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    January 21, 2025
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    Students
+                                </div>
+                            </div>
+                            <div class="announcement-snippet">
+                                The learning materials and assignments for Week 3 of the AI Workshop Series are now available on the course portal. This week covers Neural Networks and Deep Learning fundamentals...
+                            </div>
+                            <div class="announcement-actions">
+                                <a href="#" class="read-more">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </a>
+                                <span class="priority-badge priority-normal">Normal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div></div>
+                   <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="privacyPolicy.html" class="footer-link">Privacy Policy</a>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+            <a href="help_support.html" class="footer-link">Help & Support</a>
+            <a href="aditya_about_page.html" class="footer-link">About Aditya</a>
+        </div>
+    </footer>
+
+                <script>
+        // Global variables
+        let activeFilters = {
+            department: 'all',
+            date: 'all',
+            role: 'all',
+            priority: 'all'
+        };
+
+        // Header functionality
+        function switchRole() {
+            const roleSelector = document.getElementById('roleSelector');
+            const selectedRole = roleSelector.value;
+            console.log('Switched to role:', selectedRole);
+            // Here you would implement role-specific functionality
+            showNotification(`Switched to ${selectedRole} role`, 'info');
+        }
+
+        // Mobile menu functionality
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        });
+
+        // Filter dropdown functionality
+        function toggleFilterDropdown(filterType) {
+            const dropdown = document.getElementById(filterType + 'Dropdown');
+            const allDropdowns = document.querySelectorAll('.filter-dropdown');
+            
+            // Close all other dropdowns
+            allDropdowns.forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                }
+            });
+            
+            dropdown.classList.toggle('show');
+        }
+
+        // Handle filter option selection
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const dropdown = this.parentElement;
+                const filterType = dropdown.id.replace('Dropdown', '');
+                const value = this.dataset.value;
+                
+                // Update selected option
+                dropdown.querySelectorAll('.filter-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                // Update active filters
+                activeFilters[filterType] = value;
+                
+                // Update button text
+                const button = dropdown.parentElement;
+                const buttonText = button.querySelector('i:first-child').nextSibling;
+                buttonText.textContent = ' ' + this.textContent + ' ';
+                
+                // Close dropdown
+                dropdown.classList.remove('show');
+                
+                // Apply filters
+                applyFilters();
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.filter-btn')) {
+                document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
+
+        // Apply filters to announcements
+        function applyFilters() {
+            const announcements = document.querySelectorAll('.announcement-item');
+            let visibleCount = 0;
+            
+            announcements.forEach(announcement => {
+                let shouldShow = true;
+                
+                // Check department filter
+                if (activeFilters.department !== 'all') {
+                    const announcementDept = announcement.dataset.department;
+                    if (announcementDept !== activeFilters.department) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Check role filter
+                if (activeFilters.role !== 'all') {
+                    const announcementRole = announcement.dataset.role;
+                    if (announcementRole !== activeFilters.role && announcementRole !== 'all') {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Check priority filter
+                if (activeFilters.priority !== 'all') {
+                    const announcementPriority = announcement.dataset.priority;
+                    if (announcementPriority !== activeFilters.priority) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Show/hide announcement
+                if (shouldShow) {
+                    announcement.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    announcement.style.display = 'none';
+                }
+            });
+            
+            // Update results count
+            const resultsCount = document.getElementById('resultsCount');
+            const totalCount = announcements.length;
+            resultsCount.textContent = `Showing ${visibleCount} of ${totalCount} announcements`;
+            
+            // Show empty state if no results
+            showEmptyState(visibleCount === 0);
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            activeFilters = {
+                department: 'all',
+                date: 'all',
+                role: 'all',
+                priority: 'all'
+            };
+            
+            // Reset all dropdown selections
+            document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                dropdown.querySelectorAll('.filter-option').forEach(option => {
+                    option.classList.remove('selected');
+                    if (option.dataset.value === 'all') {
+                        option.classList.add('selected');
+                    }
+                });
+            });
+            
+            // Reset button texts
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const icon = btn.querySelector('i:first-child');
+                const chevron = btn.querySelector('.fa-chevron-down');
+                const filterType = btn.onclick.toString().match(/'(\w+)'/)[1];
+                
+                let defaultText = '';
+                switch(filterType) {
+                    case 'department': defaultText = ' Department '; break;
+                    case 'date': defaultText = ' Date Range '; break;
+                    case 'role': defaultText = ' Target Role '; break;
+                    case 'priority': defaultText = ' Priority '; break;
+                }
+                
+                btn.innerHTML = '';
+                btn.appendChild(icon);
+                btn.appendChild(document.createTextNode(defaultText));
+                btn.appendChild(chevron);
+                btn.appendChild(btn.querySelector('.filter-dropdown'));
+            });
+            
+            // Apply filters (show all)
+            applyFilters();
+            showNotification('Filters reset successfully', 'info');
+        }
+
+        // Show empty state
+        function showEmptyState(show) {
+            let emptyState = document.querySelector('.empty-state');
+            
+            if (show && !emptyState) {
+                emptyState = document.createElement('div');
+                emptyState.className = 'empty-state';
+                emptyState.innerHTML = `
+                    <i class="fas fa-search"></i>
+                    <h3>No announcements found</h3>
+                    <p>Try adjusting your filters to see more results</p>
+                `;
+                document.getElementById('announcementsList').appendChild(emptyState);
+            } else if (!show && emptyState) {
+                emptyState.remove();
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Initialize filters
+            applyFilters();
+        });
+
+        // Search functionality (bonus feature)
+        function searchAnnouncements(query) {
+            const announcements = document.querySelectorAll('.announcement-item');
+            let visibleCount = 0;
+            
+            announcements.forEach(announcement => {
+                const title = announcement.querySelector('.announcement-title').textContent.toLowerCase();
+                const snippet = announcement.querySelector('.announcement-snippet').textContent.toLowerCase();
+                const searchQuery = query.toLowerCase();
+                
+                if (title.includes(searchQuery) || snippet.includes(searchQuery) || searchQuery === '') {
+                    announcement.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    announcement.style.display = 'none';
+                }
+            });
+            
+            // Update results count
+            const resultsCount = document.getElementById('resultsCount');
+            const totalCount = announcements.length;
+            resultsCount.textContent = `Showing ${visibleCount} of ${totalCount} announcements`;
+            
+            showEmptyState(visibleCount === 0);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close dropdowns
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+            
+            // Ctrl/Cmd + F for search (if search is implemented)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                // Focus search input if available
+                const searchInput = document.querySelector('#searchInput');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }
+        });
+
+        // Accessibility improvements
+        function addAccessibilityAttributes() {
+            // Add ARIA labels for filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.setAttribute('aria-haspopup', 'listbox');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            
+            // Add role attributes for dropdowns
+            document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                dropdown.setAttribute('role', 'listbox');
+            });
+            
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.setAttribute('role', 'option');
+                option.setAttribute('tabindex', '0');
+            });
+            
+            // Add keyboard navigation for filter options
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+        }
+
+        // Call accessibility setup
+        addAccessibilityAttributes();
+
+        // Auto-refresh announcements (bonus feature)
+        function refreshAnnouncements() {
+            const announcementsList = document.getElementById('announcementsList');
+            announcementsList.style.opacity = '0.5';
+            
+            // Simulate loading new announcements
+            setTimeout(() => {
+                announcementsList.style.opacity = '1';
+                showNotification('Announcements refreshed', 'info');
+            }, 1000);
+        }
+
+        // Set up auto-refresh every 5 minutes
+        setInterval(refreshAnnouncements, 300000);
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Theme toggle (bonus feature)
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('darkTheme', isDark);
+            showNotification(`Switched to ${isDark ? 'dark' : 'light'} theme`, 'info');
+        }
+
+        // Load theme preference
+        if (localStorage.getItem('darkTheme') === 'true') {
+            document.body.classList.add('dark-theme');
+        }
+
+        // Bookmark announcement functionality
+        function bookmarkAnnouncement(announcementId) {
+            let bookmarks = JSON.parse(localStorage.getItem('bookmarkedAnnouncements') || '[]');
+            
+            if (bookmarks.includes(announcementId)) {
+                bookmarks = bookmarks.filter(id => id !== announcementId);
+                showNotification('Bookmark removed', 'info');
+            } else {
+                bookmarks.push(announcementId);
+                showNotification('Announcement bookmarked', 'success');
+            }
+            
+            localStorage.setItem('bookmarkedAnnouncements', JSON.stringify(bookmarks));
+            updateBookmarkButtons();
+        }
+
+        // Update bookmark button states
+        function updateBookmarkButtons() {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarkedAnnouncements') || '[]');
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                const announcementId = btn.dataset.announcementId;
+                if (bookmarks.includes(announcementId)) {
+                    btn.classList.add('bookmarked');
+                    btn.querySelector('i').classList.replace('far', 'fas');
+                } else {
+                    btn.classList.remove('bookmarked');
+                    btn.querySelector('i').classList.replace('fas', 'far');
+                }
+            });
+        }
+
+        // Initialize bookmark buttons on page load
+        document.addEventListener('DOMContentLoaded', updateBookmarkButtons);
+
+        // Handle announcement clicks for analytics
+        document.querySelectorAll('.announcement-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (!e.target.closest('.announcement-actions')) {
+                    const title = item.querySelector('.announcement-title').textContent;
+                    console.log('Announcement viewed:', title);
+                    // Here you would send analytics data
+                }
+            });
+        });
+
+        // Print functionality
+        function printAnnouncements() {
+            window.print();
+        }
+
+        // Export announcements (bonus feature)
+        function exportAnnouncements() {
+            const announcements = Array.from(document.querySelectorAll('.announcement-item:not([style*="display: none"])'));
+            const data = announcements.map(item => ({
+                title: item.querySelector('.announcement-title').textContent,
+                department: item.querySelector('.meta-item:first-child').textContent.trim(),
+                date: item.querySelector('.meta-item:nth-child(2)').textContent.trim(),
+                content: item.querySelector('.announcement-snippet').textContent.trim(),
+                priority: item.querySelector('.priority-badge')?.textContent || 'Normal'
+            }));
+            
+            const csv = 'Title,Department,Date,Content,Priority\n' + 
+                       data.map(row => Object.values(row).map(val => `"${val}"`).join(',')).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'announcements.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('Announcements exported successfully', 'success');
+        }
+    </script>
+</body>
+</html>

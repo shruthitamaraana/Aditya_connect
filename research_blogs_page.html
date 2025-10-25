@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Blogs - Aditya Connect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header/Navigation */
+        .header {
+            background-color: #f37021;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: #f37021;
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(243, 112, 33, 0.2);
+            color: #f37021;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f37021;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: #e55a0b;
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .dropdown a:hover {
+            background: #f5f5f5;
+            color: #f37021;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: #0d2c54;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #0078d7;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #f37021;
+        }
+
+        /* Card Layout */
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .card-title {
+            color: #0d2c54;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title i {
+            color: #f37021;
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: #f4f4f4;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab.active {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #f37021;
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+        }
+
+        .filter-dropdown {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-dropdown:focus {
+            outline: none;
+            border-color: #f37021;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-secondary {
+            background: #0078d7;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 120, 215, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #106ebe;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 120, 215, 0.4);
+        }
+
+        .btn-primary {
+            background-color: #f37021;
+            color: white;
+            box-shadow: 0 2px 10px rgba(13, 44, 84, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0a1f3a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(13, 44, 84, 0.4);
+        }
+
+        /* Content List */
+        .content-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-item {
+            padding: 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: #f8f9fa;
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-title {
+            color: #0078d7;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .content-title:hover {
+            color: #f37021;
+        }
+
+        .content-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .author-name {
+            color: #0d2c54;
+            font-weight: 500;
+        }
+
+        .publish-date {
+            color: #666;
+        }
+
+        .content-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e3f2fd;
+            color: #0078d7;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tag.ai { background: #e8f5e8; color: #28a745; }
+        .tag.research { background: #fff3e0; color: #f37021; }
+        .tag.entrepreneurship { background: #f3e5f5; color: #6f42c1; }
+        .tag.biotechnology { background: #e0f7fa; color: #00acc1; }
+        .tag.studentblog { background: #fce4ec; color: #e91e63; }
+
+        .content-snippet {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .content-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: #f37021;
+        }
+
+        .read-more {
+            color: #0078d7;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #f37021;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f37021;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f37021;
+        }
+
+        .footer-text {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        /* Add New Button */
+        .add-content-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #f37021;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(243, 112, 33, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .add-content-btn:hover {
+            background: #e55a0b;
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(243, 112, 33, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #f37021;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                text-align: center;
+            }
+
+            .content-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .content-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .add-content-btn {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .content-item {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f37021;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header" style="color: #ffffff;">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aditya Connect
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="announcements_page.html">Announcements</a></li>
+                <li><a href="events_page.html">Events</a></li>
+                <li><a href="placements_page.html">Placements</a></li>
+                <li><a href="research_blogs_page.html" class="active">Blogs/Research</a></li>
+                <li><a href="library.html">Library</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <div class="user-avatar" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="dropdown" id="userDropdown">
+                    <a href="#account"><i class="fas fa-user-cog"></i> Account Details</a>
+                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="help_support.html"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header fade-in">
+            <h1 class="page-title" style="color: #f37021;">Research & Blogs</h1>
+            <div class="breadcrumb">
+                <a href="#dashboard">Dashboard</a> / Research & Blogs
+            </div>
+        </div>
+
+        <!-- Content Tabs and Filters -->
+        <div class="card fade-in">
+            <div class="card-body">
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('faculty')">
+                            <i class="fas fa-microscope"></i>
+                            Faculty Publications
+                        </button>
+                        <button class="tab" onclick="switchTab('student')">
+                            <i class="fas fa-pen-alt"></i>
+                            Student Articles & Blogs
+                        </button>
+                    </div>
+
+                    <div class="filter-section">
+                        <input type="text" class="search-input" placeholder="Search by keyword..." id="searchInput">
+                        <select class="filter-dropdown" id="tagFilter">
+                            <option value="">Filter by Tag</option>
+                            <option value="ai">AI & Machine Learning</option>
+                            <option value="research">Research</option>
+                            <option value="entrepreneurship">Entrepreneurship</option>
+                            <option value="biotechnology">Biotechnology</option>
+                            <option value="studentblog">Student Blogs</option>
+                            <option value="stories">Stories</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="applyFilters()">
+                            <i class="fas fa-filter"></i>
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content List -->
+        <div class="card fade-in">
+            <div class="content-list" id="contentList">
+                <!-- Faculty Publications Content -->
+                <div class="content-item faculty-content">
+                    <a href="#" class="content-title">Machine Learning in Healthcare: A Comprehensive Review of Neural Network Applications</a>
+                    <div class="content-meta">
+                        <span class="author-name">Dr. Sarah Chen</span>
+                        <span class="publish-date">March 15, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag ai">#AI</span>
+                            <span class="tag research">#Research</span>
+                            <span class="tag">#Healthcare</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        This comprehensive review examines the latest advancements in neural network applications within healthcare systems. We analyze the implementation of deep learning algorithms in medical diagnosis, treatment prediction, and patient monitoring systems...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>24</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>8</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="content-item faculty-content">
+                    <a href="#" class="content-title">Sustainable Energy Solutions: Innovation in Solar Panel Technology</a>
+                    <div class="content-meta">
+                        <span class="author-name">Prof. Rajesh Kumar</span>
+                        <span class="publish-date">March 12, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag research">#Research</span>
+                            <span class="tag">#SustainableEnergy</span>
+                            <span class="tag">#Innovation</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        Recent breakthroughs in photovoltaic cell efficiency have opened new possibilities for sustainable energy generation. This paper discusses novel approaches to solar panel design and their potential impact on renewable energy adoption...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>18</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>5</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="content-item faculty-content">
+                    <a href="#" class="content-title">Biotechnology Advancements in Drug Discovery: CRISPR and Beyond</a>
+                    <div class="content-meta">
+                        <span class="author-name">Dr. Priya Sharma</span>
+                        <span class="publish-date">March 10, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag biotechnology">#Biotechnology</span>
+                            <span class="tag research">#Research</span>
+                            <span class="tag">#CRISPR</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        The application of CRISPR technology in pharmaceutical research has revolutionized drug discovery processes. This study explores cutting-edge gene editing techniques and their implications for personalized medicine...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>31</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>12</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <!-- Student Articles Content (Hidden by default) -->
+                <div class="content-item student-content" style="display: none;">
+                    <a href="#" class="content-title">My Journey from Student to Tech Entrepreneur: Lessons Learned</a>
+                    <div class="content-meta">
+                        <span class="author-name">Arun Patel - CSE Final Year</span>
+                        <span class="publish-date">March 14, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag entrepreneurship">#Entrepreneurship</span>
+                            <span class="tag studentblog">#StudentBlog</span>
+                            <span class="tag">#TechStartup</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        Starting a tech company while still in college seemed impossible until I took the first step. Here's my story of building a successful app that now serves over 10,000 users, and the challenges I faced along the way...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>156</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>43</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="content-item student-content" style="display: none;">
+                    <a href="#" class="content-title">Breaking Barriers: Women in STEM - My Research Experience</a>
+                    <div class="content-meta">
+                        <span class="author-name">Meera Reddy - Biotechnology 3rd Year</span>
+                        <span class="publish-date">March 11, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag studentblog">#StudentBlog</span>
+                            <span class="tag">#WomenInSTEM</span>
+                            <span class="tag research">#Research</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        Being one of the few women in my research lab initially felt intimidating, but it led to incredible opportunities. This is my story about conducting groundbreaking research in genetic engineering and inspiring other women to pursue STEM...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>89</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>27</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="content-item student-content" style="display: none;">
+                    <a href="#" class="content-title">How I Built an AI-Powered Study Assistant During Lockdown</a>
+                    <div class="content-meta">
+                        <span class="author-name">Karthik Krishnan - CSE 2nd Year</span>
+                        <span class="publish-date">March 8, 2025</span>
+                        <div class="content-tags">
+                            <span class="tag ai">#AI</span>
+                            <span class="tag studentblog">#StudentBlog</span>
+                            <span class="tag">#Innovation</span>
+                        </div>
+                    </div>
+                    <div class="content-snippet">
+                        When online classes became challenging, I decided to build an AI assistant to help students organize their study materials and track progress. Here's how I developed this tool using machine learning and natural language processing...
+                    </div>
+                    <div class="content-actions">
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-heart"></i>
+                            <span>134</span>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <i class="fas fa-comment"></i>
+                            <span>56</span>
+                        </a>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Content Button -->
+    <button class="add-content-btn" onclick="addNewContent()" title="Add New Content">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#contact">Contact</a>
+                <a href="help_support.html">Help</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <p class="footer-text">&copy; 2025 Aditya University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // User dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Tab switching functionality
+        function switchTab(tabType) {
+            const tabs = document.querySelectorAll('.tab');
+            const facultyContent = document.querySelectorAll('.faculty-content');
+            const studentContent = document.querySelectorAll('.student-content');
+            
+            // Update active tab
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide content based on tab
+            if (tabType === 'faculty') {
+                facultyContent.forEach(item => item.style.display = 'block');
+                studentContent.forEach(item => item.style.display = 'none');
+            } else {
+                facultyContent.forEach(item => item.style.display = 'none');
+                studentContent.forEach(item => item.style.display = 'block');
+            }
+            
+            // Reset filters when switching tabs
+            document.getElementById('searchInput').value = '';
+            document.getElementById('tagFilter').value = '';
+        }
+
+        // Filter functionality
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedTag = document.getElementById('tagFilter').value;
+            const contentItems = document.querySelectorAll('.content-item');
+            const activeTab = document.querySelector('.tab.active').textContent.includes('Faculty') ? 'faculty' : 'student';
+            
+            let visibleCount = 0;
+            
+            contentItems.forEach(item => {
+                const isCorrectTab = (activeTab === 'faculty' && item.classList.contains('faculty-content')) ||
+                                   (activeTab === 'student' && item.classList.contains('student-content'));
+                
+                if (!isCorrectTab) {
+                    item.style.display = 'none';
+                    return;
+                }
+                
+                const title = item.querySelector('.content-title').textContent.toLowerCase();
+                const snippet = item.querySelector('.content-snippet').textContent.toLowerCase();
+                const tags = item.querySelectorAll('.tag');
+                
+                let matchesSearch = searchTerm === '' || title.includes(searchTerm) || snippet.includes(searchTerm);
+                let matchesTag = selectedTag === '';
+                
+                if (selectedTag) {
+                    tags.forEach(tag => {
+                        if (tag.classList.contains(selectedTag)) {
+                            matchesTag = true;
+                        }
+                    });
+                }
+                
+                if (matchesSearch && matchesTag) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show empty state if no results
+            showEmptyState(visibleCount === 0);
+            
+            // Show notification
+            showNotification(`Found ${visibleCount} ${visibleCount === 1 ? 'result' : 'results'}`, 'info');
+        }
+
+        // Show empty state
+        function showEmptyState(show) {
+            let emptyState = document.querySelector('.empty-state');
+            
+            if (show && !emptyState) {
+                emptyState = document.createElement('div');
+                emptyState.className = 'empty-state';
+                emptyState.innerHTML = `
+                    <i class="fas fa-search"></i>
+                    <h3>No content found</h3>
+                    <p>Try adjusting your search criteria or browse different categories.</p>
+                `;
+                document.getElementById('contentList').appendChild(emptyState);
+            } else if (!show && emptyState) {
+                emptyState.remove();
+            }
+        }
+
+        // Add new content functionality
+        function addNewContent() {
+            const activeTab = document.querySelector('.tab.active').textContent.includes('Faculty') ? 'faculty' : 'student';
+            const contentType = activeTab === 'faculty' ? 'Research Publication' : 'Blog Article';
+            
+            showNotification(`Add New ${contentType} functionality would open here`, 'info');
+            
+            // In a real application, this would open a modal or redirect to a content creation page
+            console.log(`Opening content creation form for ${contentType}`);
+        }
+
+        // Search as you type
+        document.getElementById('searchInput').addEventListener('input', function() {
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                applyFilters();
+            }, 300);
+        });
+
+        // Real-time tag filter
+        document.getElementById('tagFilter').addEventListener('change', applyFilters);
+
+        // Like functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.action-btn') && e.target.closest('.action-btn').querySelector('.fa-heart')) {
+                const btn = e.target.closest('.action-btn');
+                const countSpan = btn.querySelector('span');
+                const currentCount = parseInt(countSpan.textContent);
+                const icon = btn.querySelector('i');
+                
+                if (icon.classList.contains('far')) {
+                    // Like the post
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    countSpan.textContent = currentCount + 1;
+                    btn.style.color = '#f37021';
+                    showNotification('Added to favorites!', 'success');
+                } else {
+                    // Unlike the post
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    countSpan.textContent = currentCount - 1;
+                    btn.style.color = '#666';
+                    showNotification('Removed from favorites', 'info');
+                }
+                
+                e.preventDefault();
+            }
+        });
+
+        // Initialize heart icons as outline
+        document.querySelectorAll('.action-btn .fa-heart').forEach(icon => {
+            icon.classList.add('far');
+            icon.classList.remove('fas');
+        });
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Loading simulation
+        function showLoading() {
+            const contentList = document.getElementById('contentList');
+            const loading = document.createElement('div');
+            loading.className = 'loading';
+            loading.innerHTML = `
+                <div class="spinner"></div>
+                <p>Loading content...</p>
+            `;
+            contentList.innerHTML = '';
+            contentList.appendChild(loading);
+            
+            // Simulate loading time
+            setTimeout(() => {
+                location.reload(); // In real app, this would load new content
+            }, 2000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add smooth scrolling animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+            
+            // Initialize with faculty tab active
+            switchTab('faculty');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Escape key closes dropdowns and clears search
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('userDropdown');
+                const navLinks = document.getElementById('navLinks');
+                dropdown.classList.remove('show');
+                navLinks.classList.remove('show');
+                
+                document.getElementById('searchInput').value = '';
+                document.getElementById('tagFilter').value = '';
+                applyFilters();
+            }
+            
+            // Ctrl/Cmd + F focuses search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // Tab navigation between Faculty and Student tabs
+            if (e.key === '1' && e.altKey) {
+                e.preventDefault();
+                document.querySelector('.tab').click();
+            } else if (e.key === '2' && e.altKey) {
+                e.preventDefault();
+                document.querySelectorAll('.tab')[1].click();
+            }
+        });
+
+        // Infinite scroll simulation
+        let isLoading = false;
+        window.addEventListener('scroll', () => {
+            if (isLoading) return;
+            
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            
+            if (scrollTop + clientHeight >= scrollHeight - 5) {
+                isLoading = true;
+                
+                // Show loading indicator
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.className = 'loading';
+                loadingIndicator.innerHTML = `
+                    <div class="spinner"></div>
+                    <p>Loading more content...</p>
+                `;
+                document.getElementById('contentList').appendChild(loadingIndicator);
+                
+                // Simulate loading more content
+                setTimeout(() => {
+                    loadingIndicator.remove();
+                    showNotification('No more content to load', 'info');
+                    isLoading = false;
+                }, 1500);
+            }
+        });
+
+        // Share functionality (placeholder)
+        function shareContent(title, url) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('Link copied to clipboard!', 'success');
+                });
+            }
+        }
+
+        // Print functionality
+        function printContent() {
+            window.print();
+        }
+
+        // Export functionality (placeholder)
+        function exportContent() {
+            showNotification('Export functionality would be implemented here', 'info');
+        }
+
+        // Accessibility improvements
+        function addAccessibilityAttributes() {
+            // Add ARIA labels
+            document.querySelector('.user-avatar').setAttribute('aria-label', 'User menu');
+            document.querySelector('.mobile-menu-toggle').setAttribute('aria-label', 'Toggle mobile menu');
+            document.querySelector('.add-content-btn').setAttribute('aria-label', 'Add new content');
+            
+            // Add role attributes
+            document.querySelector('.dropdown').setAttribute('role', 'menu');
+            document.querySelectorAll('.dropdown a').forEach(link => {
+                link.setAttribute('role', 'menuitem');
+            });
+            
+            // Add tabindex for keyboard navigation
+            document.querySelectorAll('.content-item').forEach((item, index) => {
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('role', 'article');
+            });
+        }
+
+        // Call accessibility setup
+        addAccessibilityAttributes();
+
+        // Touch support for mobile
+        let touchStartY = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            // Pull to refresh (swipe down at top of page)
+            if (diff < -100 && window.scrollY === 0) {
+                showLoading();
+            }
+        });
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Analytics tracking (placeholder)
+        function trackEvent(category, action, label) {
+            console.log(`Analytics: ${category} - ${action} - ${label}`);
+            // In real app, this would send to analytics service
+        }
+
+        // Track content interactions
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.content-title')) {
+                trackEvent('Content', 'Click', 'Title');
+            } else if (e.target.closest('.read-more')) {
+                trackEvent('Content', 'Click', 'Read More');
+            } else if (e.target.closest('.action-btn')) {
+                trackEvent('Content', 'Interaction', 'Action Button');
+            }
+        });
+    </script>
+</body>
+</html>
