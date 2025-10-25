@@ -54,7 +54,7 @@ aditya-connect/
 
 ## 🚀 Live Demo
 
-👉 [View Website]((https://shruthitamaraana.github.io/Aditya_connect/))
+👉 [View Website](https://shruthitamaraana.github.io/Aditya_connect/)
 
 
 
