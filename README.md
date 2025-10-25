@@ -49,8 +49,6 @@ aditya-connect/
 ├── terms.html
 └── assets/ # Images, CSS, JS, and other static files
 
-yaml
-Copy code
 
 ---
 
@@ -58,7 +56,7 @@ Copy code
 
 👉 [View Website](https://shruthitamaraana.github.io/aditya-connect)
 
-*(Replace `yourusername` with your actual GitHub username once hosted.)*
+
 
 ---
 
