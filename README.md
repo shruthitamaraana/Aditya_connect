@@ -54,7 +54,7 @@ aditya-connect/
 
 ## 🚀 Live Demo
 
-👉 [View Website](https://shruthitamaraana.github.io/aditya_connect)
+👉 [View Website]((https://shruthitamaraana.github.io/Aditya_connect/))
 
 
 
@@ -64,8 +64,8 @@ aditya-connect/
 
 Developed by **Shruthi Tamaraana**  
 📍 Aditya University  
-📩 Email: shruthitamaraana@example.com  
-🔗 [GitHub Profile](https://github.com/yourusername)
+📩 Email: shruthitamaraana721@gmail.com  
+🔗 [GitHub Profile](https://github.com/shruthitamaraana)
 
 ---
 
